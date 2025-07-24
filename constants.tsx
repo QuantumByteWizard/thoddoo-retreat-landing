@@ -54,29 +54,50 @@ export const EXCURSIONS: Excursion[] = [
 
 export const REVIEWS: Review[] = [
   {
-    name: "Anastasia",
-    location: "Russia",
+    name: "Alex",
+    location: "United Kingdom",
     rating: 5,
-    text: "Very nice, cozy and comfortable hotel. The room has everything you need, a large comfortable bed, a clean bathroom. The breakfasts are delicious and hearty. The staff is very friendly and helpful.",
-    avatar: "https://picsum.photos/id/1027/100/100",
-    date: "June 2024"
+    text: "The welcome was so warm! Felt at home right away.",
+    avatar: "https://i.pravatar.cc/100?u=a042581f4e29026704d",
+    date: "July 2024",
+    section: "arrival"
   },
   {
-    name: "Oleg",
-    location: "Ukraine",
+    name: "Maria",
+    location: "Germany",
     rating: 5,
-    text: "The best guest house on the island! It feels like you are visiting good friends. The staff is very friendly and helpful, they solve any questions. The rooms are clean, the food is delicious. Highly recommend!",
-    avatar: "https://picsum.photos/id/1005/100/100",
-    date: "May 2024"
+    text: "They greeted us at the harbor, smiling and ready to help. The transfer was seamless.",
+    avatar: "https://i.pravatar.cc/100?u=a042581f4e29026704e",
+    date: "July 2024",
+    section: "welcome"
   },
   {
-    name: "Victoria",
-    location: "Russia",
+    name: "Chen",
+    location: "Singapore",
     rating: 5,
-    text: "The hotel is great, the rooms are clean, there is everything you need! Special thanks to the hotel manager, Shifaz, for his help in all matters. The beach is a 5 minute walk. We will definitely come back!",
-    avatar: "https://picsum.photos/id/1011/100/100",
-    date: "July 2024"
+    text: "The room was immaculate and so cozy! Slept like a baby.",
+    avatar: "https://i.pravatar.cc/100?u=a042581f4e29026704f",
+    date: "June 2024",
+    section: "room"
   },
+  {
+    name: "Fatima",
+    location: "UAE",
+    rating: 5,
+    text: "The snorkeling trip was unforgettable! The staff arranged everything perfectly.",
+    avatar: "https://i.pravatar.cc/100?u=a042581f4e29026704a",
+    date: "June 2024",
+    section: "excursion"
+  },
+  {
+    name: "Isabelle",
+    location: "France",
+    rating: 5,
+    text: "The breakfast was the best we had in Maldives! So fresh and delicious.",
+    avatar: "https://i.pravatar.cc/100?u=a042581f4e29026704b",
+    date: "May 2024",
+    section: "dining"
+  }
 ];
 
 export const GALLERY_IMAGES: GalleryImage[] = [

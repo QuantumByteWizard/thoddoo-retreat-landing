@@ -16,6 +16,7 @@ export interface Review {
   text: string;
   avatar: string;
   date: string;
+  section?: string;
 }
 
 export interface GalleryImage {
