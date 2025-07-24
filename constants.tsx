@@ -58,21 +58,24 @@ export const REVIEWS: Review[] = [
     location: "Russia",
     rating: 5,
     text: "Very nice, cozy and comfortable hotel. The room has everything you need, a large comfortable bed, a clean bathroom. The breakfasts are delicious and hearty. The staff is very friendly and helpful.",
-    avatar: "https://picsum.photos/id/1027/100/100"
+    avatar: "https://picsum.photos/id/1027/100/100",
+    date: "June 2024"
   },
   {
     name: "Oleg",
     location: "Ukraine",
     rating: 5,
     text: "The best guest house on the island! It feels like you are visiting good friends. The staff is very friendly and helpful, they solve any questions. The rooms are clean, the food is delicious. Highly recommend!",
-    avatar: "https://picsum.photos/id/1005/100/100"
+    avatar: "https://picsum.photos/id/1005/100/100",
+    date: "May 2024"
   },
   {
     name: "Victoria",
     location: "Russia",
     rating: 5,
     text: "The hotel is great, the rooms are clean, there is everything you need! Special thanks to the hotel manager, Shifaz, for his help in all matters. The beach is a 5 minute walk. We will definitely come back!",
-    avatar: "https://picsum.photos/id/1011/100/100"
+    avatar: "https://picsum.photos/id/1011/100/100",
+    date: "July 2024"
   },
 ];
 
