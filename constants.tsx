@@ -101,8 +101,8 @@ export const REVIEWS: Review[] = [
 ];
 
 export const GALLERY_IMAGES: GalleryImage[] = [
-    { src: "https://wildmaldives.com/media/images/f3697e09-e85b-402a-a92c-e18e0018b32c-1.jpg", alt: "Exterior view of Thoddoo Retreat, a modern guesthouse in Maldives" },
-    { src: "https://wildmaldives.com/media/images/42c38d38-232a-43cf-be61-267990176868.jpg", alt: "Deluxe double room at Thoddoo Retreat guesthouse with modern decor" },
+    { src: "/images/guesthouse-exterior.jpg", alt: "Exterior view of Thoddoo Retreat, a modern guesthouse in Maldives" },
+    { src: "/images/guesthouse-room.jpg", alt: "Deluxe double room at Thoddoo Retreat guesthouse with modern decor" },
     { src: "https://wildmaldives.com/media/images/2208f2e4-e7ea-43d9-a548-6a581404e8d3-1.jpg", alt: "Guest relaxing on a hammock on the white sand of Thoddoo Bikini Beach" },
     { src: "https://wildmaldives.com/media/images/84384a20-a616-43ac-93d3-7d52f676451e-1.jpg", alt: "Healthy Maldivian breakfast served at Thoddoo Retreat" },
     { src: "https://wildmaldives.com/media/images/c234b684-2a6c-48be-b166-5e5890885d56-1.jpg", alt: "Tourist snorkeling with a green sea turtle near Thoddoo island" },

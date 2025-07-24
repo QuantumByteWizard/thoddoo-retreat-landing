@@ -116,52 +116,58 @@ const FirstImpressionsSection: React.FC = () => {
   );
 };
 
-const SettleInSection: React.FC = () => {
-  const roomReview = REVIEWS.find(r => r.section === 'room');
+
+
+
+
+
+
+
+
+const RoomSanctuarySection: React.FC = () => {
   const ref = useRef(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ['start end', 'end start']
+  });
+
   const y1 = useTransform(scrollYProgress, [0, 1], ['-10%', '10%']);
   const y2 = useTransform(scrollYProgress, [0, 1], ['10%', '-10%']);
 
+  const roomReview = REVIEWS.find(r => r.section === 'room');
+
   return (
     <SectionWrapper ref={ref} className="bg-white">
-      <div className="container mx-auto px-6">
-        <AnimatedElement className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-teal-700 mb-6">Your Room, Your Sanctuary</h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">Your private oasis awaits—modern, spotless, and full of light.</p>
+      <div className="container mx-auto px-6 text-center">
+        <AnimatedElement>
+          <h2 className="text-4xl font-bold text-teal-700 mb-4">Your Room, Your Sanctuary</h2>
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-12">Your private oasis awaits—modern, spotless, and full of light.</p>
         </AnimatedElement>
         <div className="grid md:grid-cols-3 gap-4 items-center">
-          <motion.div style={{ y: y1 }} className="md:col-span-1">
-            <img loading="lazy" src={GALLERY_IMAGES[1].src} alt="Modern guesthouse room" className="rounded-lg shadow-xl"/>
+          <motion.div className="md:col-span-1" style={{ y: y1 }}>
+            <img
+              loading="lazy"
+              alt="Modern guesthouse room"
+              className="rounded-lg shadow-xl"
+              src={GALLERY_IMAGES[1].src}
+            />
           </motion.div>
           <div className="md:col-span-1 flex justify-center">
-            {roomReview && <ReviewCard review={roomReview} className="z-10" />}
+            {roomReview && <ReviewCard review={roomReview} />}
           </div>
-          <motion.div style={{ y: y2 }} className="md:col-span-1">
-            <img loading="lazy" src={GALLERY_IMAGES[0].src} alt="Guesthouse exterior" className="rounded-lg shadow-xl"/>
+          <motion.div className="md:col-span-1" style={{ y: y2 }}>
+            <img
+              loading="lazy"
+              alt="Guesthouse exterior"
+              className="rounded-lg shadow-xl"
+              src={GALLERY_IMAGES[0].src}
+            />
           </motion.div>
         </div>
       </div>
     </SectionWrapper>
   );
 };
-
-
-
-const galleryItemVariants = {
-  hidden: { opacity: 0, y: 50, scale: 0.8 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    transition: {
-      duration: 0.8,
-      ease: 'easeOut' as const,
-    },
-  },
-};
-
-
 
 const LocationSection: React.FC = () => {
   return (
@@ -190,48 +196,7 @@ const LocationSection: React.FC = () => {
   );
 };
 
-const AboutGuesthouseSection: React.FC = () => {
-  const roomReview = REVIEWS.find(r => r.section === 'room');
-  const roomImages = [
-    { src: '/images/guesthouse-room.jpg', alt: 'Spacious and modern guesthouse room with a king-size bed and marble-style wall' },
-    { src: '/images/guesthouse-exterior.jpg', alt: 'Exterior of the guesthouse covered in lush green vines' },
-  ];
 
-  return (
-    <SectionWrapper className="bg-gray-50">
-      <div className="container mx-auto px-6 flex flex-col items-center">
-        <AnimatedElement className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-teal-700 mb-4">Your Room, Your Sanctuary</h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">Spacious, modern, and designed for comfort. Your perfect retreat after a day of adventure.</p>
-        </AnimatedElement>
-
-        <div className="grid md:grid-cols-3 gap-8 items-center w-full max-w-5xl">
-          <motion.div 
-            className="overflow-hidden rounded-lg shadow-xl h-96"
-            variants={galleryItemVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.4 }}
-          >
-            <img loading="lazy" src={roomImages[0].src} alt={roomImages[0].alt} className="w-full h-full object-cover" />
-          </motion.div>
-
-          {roomReview && <ReviewCard review={roomReview} className="self-center" />}
-
-          <motion.div 
-            className="overflow-hidden rounded-lg shadow-xl h-96"
-            variants={galleryItemVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.4 }}
-          >
-            <img loading="lazy" src={roomImages[1].src} alt={roomImages[1].alt} className="w-full h-full object-cover" />
-          </motion.div>
-        </div>
-      </div>
-    </SectionWrapper>
-  );
-};
 
 const DiscoverThoddooSection: React.FC = () => {
   const excursionReview = REVIEWS.find(r => r.section === 'excursion');
@@ -404,8 +369,8 @@ const App: React.FC = () => {
       <main className="h-screen overflow-y-scroll snap-y snap-mandatory">
         <ArrivalSection />
         <FirstImpressionsSection />
-        <SettleInSection />
-        <AboutGuesthouseSection />
+
+        <RoomSanctuarySection />
         <LocationSection />
         <DiscoverThoddooSection />
         <EverydayMagicSection />
