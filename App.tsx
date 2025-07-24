@@ -10,22 +10,22 @@ import type { Review } from './types';
 const THODDOO_ACTIVITIES = [
   {
     title: "Manta + Nurse Shark Snorkeling",
-    image: "public/images/Manta+shark.jpeg",
+    image: "/images/Manta+shark.jpeg",
     description: "Swim alongside majestic manta rays and gentle nurse sharks in crystal-clear waters. An unforgettable encounter with ocean giants!"
   },
   {
     title: "Manta Snorkeling",
-    image: "public/images/manta.jpeg",
+    image: "/images/manta.jpeg",
     description: "Experience the grace of manta rays gliding through pristine reefs. These gentle giants will leave you breathless with wonder."
   },
   {
     title: "Dolphin Cruise",
-    image: "public/images/dolphin.jpeg",
+    image: "/images/dolphin.jpeg",
     description: "Watch playful dolphins dance in the sunset as you cruise the turquoise waters. Pure magic on the Indian Ocean."
   },
   {
     title: "Dinner at Beach",
-    image: "public/images/beach_dinner.jpeg",
+    image: "/images/beach_dinner.jpeg",
     description: "Dine under the stars with your toes in the sand. Fresh seafood, ocean breeze, and unforgettable island romance."
   }
 ];

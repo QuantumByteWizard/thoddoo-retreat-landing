@@ -75,7 +75,7 @@ export const REVIEWS: Review[] = [
     location: "Canada",
     rating: 5,
     text: "Very nice and helpful people. Very good local breakfast. They beach is very clean. They took us for snorkeling and turtle safari which was awesome, we seen ref sharks, the eagle ray as well. Beautiful experience.A Must visit.",
-    avatar: "public/icons/man.png",
+    avatar: "/icons/man.png",
     date: "July 2024",
     section: "arrival"
   },
@@ -84,7 +84,7 @@ export const REVIEWS: Review[] = [
     location: "Russia",
     rating: 5,
     text: "I liked the hotel very much. Friendly staff, convenient location, delicious Maldivian breakfast.",
-    avatar: "public/icons/man.png",
+    avatar: "/icons/man.png",
     date: "July 2024",
     section: "welcome"
   },
@@ -93,7 +93,7 @@ export const REVIEWS: Review[] = [
     location: "Netherlands",
     rating: 5,
     text: "Very clean and big room. The owner is very friendly. We enjoyed our stay with our baby",
-    avatar: "public/icons/man.png",
+    avatar: "/icons/man.png",
     date: "June 2024",
     section: "room"
   },
@@ -102,7 +102,7 @@ export const REVIEWS: Review[] = [
     location: "France",
     rating: 5,
     text: "The hotel is very nice and comfortable and very well located on the island. The manager took really care of us and offers a lot of activities (snorkeling, banksand, swimming with manta rays...) He knows the sea very well so we felt very safe with him.",
-    avatar: "public/icons/man.png",
+    avatar: "/icons/man.png",
     date: "June 2024",
     section: "excursion"
   },
@@ -111,7 +111,7 @@ export const REVIEWS: Review[] = [
     location: "Random",
     rating: 5,
     text: "Very Friendly Staff. Had stayed 2 nights here during Dec 2017. They helped us with Snorkeling. Great place with Young Kids or Toddlers. They can play with sand all day under shed. Food is also great.",
-    avatar: "public/icons/man.png",
+    avatar: "/icons/man.png",
     date: "December 2017",
     section: "dining"
   }
