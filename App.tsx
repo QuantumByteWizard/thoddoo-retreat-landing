@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { motion, useInView, useScroll, useTransform } from 'framer-motion';
 import { REVIEWS, GALLERY_IMAGES, GUEST_AMENITIES, FacebookIcon, InstagramIcon, WhatsAppIcon } from './constants';
 import { TRANSPORT_STEPS } from './constants';
@@ -10,37 +10,39 @@ import type { Review } from './types';
 const THODDOO_ACTIVITIES = [
   {
     title: "Manta + Nurse Shark Snorkeling",
-    image: "https://images.unsplash.com/photo-1583212292454-1fe6229603b7?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=75",
+    image: "public/images/Manta+shark.jpeg",
     description: "Swim alongside majestic manta rays and gentle nurse sharks in crystal-clear waters. An unforgettable encounter with ocean giants!"
   },
   {
     title: "Manta Snorkeling",
-    image: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=75",
+    image: "public/images/manta.jpeg",
     description: "Experience the grace of manta rays gliding through pristine reefs. These gentle giants will leave you breathless with wonder."
   },
   {
     title: "Dolphin Cruise",
-    image: "https://images.unsplash.com/photo-1559827260-dc66d52bef19?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=75",
+    image: "public/images/dolphin.jpeg",
     description: "Watch playful dolphins dance in the sunset as you cruise the turquoise waters. Pure magic on the Indian Ocean."
   },
   {
     title: "Dinner at Beach",
-    image: "https://images.unsplash.com/photo-1551218808-94e220e084d2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=75",
+    image: "public/images/beach_dinner.jpeg",
     description: "Dine under the stars with your toes in the sand. Fresh seafood, ocean breeze, and unforgettable island romance."
   }
 ];
 
 // Flip Card Component
-const ActivityFlipCard: React.FC<{ activity: typeof THODDOO_ACTIVITIES[0] }> = ({ activity }) => {
+const ActivityFlipCard: React.FC<{ activity: typeof THODDOO_ACTIVITIES[0] }> = React.memo(({ activity }) => {
   return (
     <div className="group perspective-1000 h-48 sm:h-56 md:h-64">
-      <div className="relative w-full h-full transition-transform duration-700 transform-style-preserve-3d group-hover:rotate-y-180">
+      <div className="relative w-full h-full transition-transform duration-500 transform-style-preserve-3d group-hover:rotate-y-180 will-change-transform">
         {/* Front of card */}
         <div className="absolute inset-0 w-full h-full backface-hidden rounded-xl overflow-hidden shadow-lg">
           <img 
             src={activity.image} 
             alt={activity.title}
             className="w-full h-full object-cover"
+            loading="lazy"
+            decoding="async"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
           <div className="absolute bottom-3 left-3 right-3 sm:bottom-4 sm:left-4 sm:right-4">
@@ -56,7 +58,7 @@ const ActivityFlipCard: React.FC<{ activity: typeof THODDOO_ACTIVITIES[0] }> = (
       </div>
     </div>
   );
-};
+});
 
 // Simple Interactive Map Component using OpenStreetMap embed
 const InteractiveMap: React.FC = () => {
@@ -83,20 +85,20 @@ const InteractiveMap: React.FC = () => {
 // --- Reusable Components ---
 
 const fadeIn = {
-  hidden: { opacity: 0, y: 20 },
+  hidden: { opacity: 0, y: 10 },
   visible: { 
     opacity: 1, 
     y: 0, 
     transition: { 
-      duration: 0.8, 
+      duration: 0.4, 
       ease: 'easeOut' as const 
     } 
   },
 };
 
-const AnimatedElement: React.FC<{ children: React.ReactNode; className?: string }> = ({ children, className }) => {
+const AnimatedElement: React.FC<{ children: React.ReactNode; className?: string; style?: React.CSSProperties }> = React.memo(({ children, className, style }) => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.3 });
+  const isInView = useInView(ref, { once: true, amount: 0.2, margin: "0px 0px -100px 0px" });
 
   return (
     <motion.div
@@ -105,15 +107,123 @@ const AnimatedElement: React.FC<{ children: React.ReactNode; className?: string 
       animate={isInView ? 'visible' : 'hidden'}
       variants={fadeIn}
       className={className}
+      style={style}
+      layout={false}
     >
       {children}
     </motion.div>
+  );
+});
+
+const InteractiveFeatureCards: React.FC = () => {
+  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
+  
+  const features = [
+    {
+      emoji: "🏆",
+      title: "Couples' Paradise Island",
+      preview: "#1 Romantic Destination",
+      details: "Consistently rated #1 romantic island by travel bloggers. Perfect sunsets, private beaches, and intimate dining experiences."
+    },
+    {
+      emoji: "🏖️",
+      title: "World-Class Beach Access",
+      preview: "Crystal Clear Waters",
+      details: "Top-rated beach in Maldives with pristine white sand, crystal-clear turquoise waters, and excellent snorkeling spots."
+    },
+    {
+      emoji: "🍽️",
+      title: "Best Breakfast Experience",
+      preview: "Fresh Tropical Fruits",
+      details: "Complimentary breakfast featuring fresh tropical fruits, local delicacies, and international favorites served daily."
+    },
+    {
+      emoji: "🚤",
+      title: "Adventure Hub Location",
+      preview: "Easy Boat Access",
+      details: "Strategic location with easy boat access to all excursions, diving spots, fishing trips, and island hopping adventures."
+    },
+    {
+      emoji: "👥",
+      title: "Legendary Hospitality",
+      preview: "Warmest Community",
+      details: "Experience the warmest, most welcoming island community in Maldives with genuine local hospitality and cultural immersion."
+    },
+    {
+      emoji: "💰",
+      title: "True Budget Value",
+      preview: "Premium at Budget Prices",
+      details: "Enjoy premium resort-style experience at budget hotel prices. Exceptional value without compromising on quality or comfort."
+    }
+  ];
+
+  return (
+    <div className="text-center mb-8">
+      <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">
+        Why Choose Thoddoo Island?
+      </h3>
+      <p className="text-slate-300 mb-8 max-w-2xl mx-auto">
+        Hover over each feature to discover what makes us special
+      </p>
+      
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {features.map((feature, index) => (
+          <div
+            key={index}
+            className="relative bg-slate-700 rounded-xl p-6 border border-slate-600 cursor-pointer transition-all duration-300 hover:bg-slate-600 hover:border-emerald-400 hover:scale-105 group"
+            onMouseEnter={() => setHoveredCard(index)}
+            onMouseLeave={() => setHoveredCard(null)}
+          >
+            <div className="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300">
+              {feature.emoji}
+            </div>
+            
+            <h4 className="font-bold text-emerald-400 text-lg mb-3 group-hover:text-emerald-300">
+              {feature.title}
+            </h4>
+            
+            <div className="text-slate-300 text-sm leading-relaxed">
+              {hoveredCard === index ? (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  {feature.details}
+                </motion.div>
+              ) : (
+                <div className="text-slate-400">
+                  {feature.preview}
+                  <div className="text-xs mt-2 text-emerald-400 opacity-70">
+                    Hover to explore →
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+      
+      <div className="mt-8">
+        <button
+          onClick={() => {
+            const bookingSection = document.querySelector('section[class*="bg-gray-50"]');
+            bookingSection?.scrollIntoView({ behavior: 'smooth' });
+          }}
+          className="bg-emerald-500 hover:bg-emerald-600 text-white px-8 py-3 rounded-full font-bold text-lg transition-all duration-300 hover:scale-105 shadow-lg"
+        >
+          Book Now
+        </button>
+      </div>
+    </div>
   );
 };
 
 const ReviewCard: React.FC<{ review: Review; className?: string }> = ({ review, className }) => {
   return (
-    <AnimatedElement className={`bg-white/80 backdrop-blur-md p-4 sm:p-6 rounded-xl shadow-lg text-gray-700 max-w-sm ${className}`}>
+    <AnimatedElement 
+      className={`bg-white p-4 sm:p-6 rounded-xl shadow-lg text-gray-700 max-w-sm ${className}`}
+    >
       <div className="flex items-center mb-3">
         <img loading="lazy" src={review.avatar} alt={review.name} className="w-10 h-10 sm:w-12 sm:h-12 rounded-full mr-3 sm:mr-4 border-2 border-teal-100" />
         <div>
@@ -187,9 +297,15 @@ const ProblemSolutionSection: React.FC = () => {
           <div className="inline-block bg-red-500/10 text-red-400 px-6 py-2 rounded-full text-sm font-semibold border border-red-500/30 mb-8">
             ⚠️ The Island Search Struggle
           </div>
-          <h1 className="text-4xl md:text-6xl font-black leading-tight mb-6 bg-gradient-to-r from-red-500 via-orange-400 to-yellow-500 bg-clip-text text-transparent">
+          <motion.h1 
+            className="text-4xl md:text-6xl font-black leading-tight mb-6 bg-gradient-to-r from-red-500 via-orange-400 to-yellow-500 bg-clip-text text-transparent animate-gradient"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+            viewport={{ once: true, amount: 0.3 }}
+          >
             Overwhelmed by Endless Maldives Island Options?
-          </h1>
+          </motion.h1>
           <p className="max-w-3xl mx-auto text-lg md:text-xl text-slate-400 mb-12">
             Scrolling through hundreds of <strong>Maldives islands</strong> and <strong>guesthouses</strong>, comparing prices, and still having no idea which <strong>island</strong> gives you the perfect balance of budget, beauty, and authentic experiences?
           </p>
@@ -222,53 +338,9 @@ const ProblemSolutionSection: React.FC = () => {
           </p>
         </AnimatedElement>
 
-        {/* 3. Proof Section */}
-        <AnimatedElement className="bg-white/5 rounded-2xl p-8 md:p-12 border border-white/10 backdrop-blur-sm mb-16">
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 text-left">
-            <div className="flex items-start gap-4 p-4 bg-emerald-500/5 border border-emerald-500/10 rounded-lg">
-              <span className="text-2xl mt-1">🏆</span>
-              <div>
-                <h4 className="font-bold text-emerald-400">Couples' Paradise Island</h4>
-                <p className="text-sm text-slate-400">Consistently rated #1 romantic <strong>island</strong> by travel bloggers.</p>
-              </div>
-            </div>
-            <div className="flex items-start gap-4 p-4 bg-emerald-500/5 border border-emerald-500/10 rounded-lg">
-              <span className="text-2xl mt-1">🏖️</span>
-              <div>
-                <h4 className="font-bold text-emerald-400">World-Class Beach Access</h4>
-                <p className="text-sm text-slate-400">Top-rated beach in <strong>Maldives</strong> - crystal waters, white sand.</p>
-              </div>
-            </div>
-            <div className="flex items-start gap-4 p-4 bg-emerald-500/5 border border-emerald-500/10 rounded-lg">
-              <span className="text-2xl mt-1">🍽️</span>
-              <div>
-                <h4 className="font-bold text-emerald-400">Best Breakfast Experience</h4>
-                <p className="text-sm text-slate-400">Complimentary <strong>breakfast</strong> with fresh tropical fruits daily.</p>
-              </div>
-            </div>
-            <div className="flex items-start gap-4 p-4 bg-emerald-500/5 border border-emerald-500/10 rounded-lg">
-              <span className="text-2xl mt-1">🚤</span>
-              <div>
-                <h4 className="font-bold text-emerald-400">Adventure Hub Location</h4>
-                <p className="text-sm text-slate-400">Easy boat access to all excursions and activities.</p>
-              </div>
-            </div>
-            <div className="flex items-start gap-4 p-4 bg-emerald-500/5 border border-emerald-500/10 rounded-lg">
-              <span className="text-2xl mt-1">👥</span>
-              <div>
-                <h4 className="font-bold text-emerald-400">Legendary Hospitality</h4>
-                <p className="text-sm text-slate-400">Warmest, most welcoming island community in <strong>Maldives</strong>.</p>
-              </div>
-            </div>
-            <div className="flex items-start gap-4 p-4 bg-emerald-500/5 border border-emerald-500/10 rounded-lg">
-              <span className="text-2xl mt-1">💰</span>
-              <div>
-                <h4 className="font-bold text-emerald-400">True Budget Value</h4>
-                <p className="text-sm text-slate-400">Premium experience at <strong>budget hotel</strong> prices.</p>
-              </div>
-            </div>
-          </div>
+        {/* 3. Interactive Proof Section */}
+        <AnimatedElement className="bg-slate-800 rounded-2xl p-8 md:p-12 border border-slate-700 mb-16">
+          <InteractiveFeatureCards />
         </AnimatedElement>
 
 
@@ -423,39 +495,120 @@ const EverydayMagicSection: React.FC = () => {
 };
 
 const AmenitiesSection: React.FC = () => {
-  const scrollRef = useRef(null);
+  const [selectedAmenity, setSelectedAmenity] = React.useState<number | null>(null);
+  const [isExpanded, setIsExpanded] = React.useState(false);
+
+  const handleAmenityClick = (index: number) => {
+    if (selectedAmenity === index) {
+      setSelectedAmenity(null);
+      setIsExpanded(false);
+    } else {
+      setSelectedAmenity(index);
+      setIsExpanded(true);
+    }
+  };
 
   return (
     <SectionWrapper className="bg-slate-50">
       <div className="container mx-auto px-4 md:px-6 text-center">
         <AnimatedElement>
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-teal-700 mb-4">Our Guest Amenities</h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-12">Everything you need for a perfect stay. We've thought of all the details.</p>
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-12">Click on any amenity to explore what we offer</p>
         </AnimatedElement>
-        <div ref={scrollRef} className="relative flex overflow-x-auto scrollbar-hide py-8 -mx-4 px-4">
-          <div className="flex gap-6 md:gap-8">
+        
+        {/* Interactive Stacked Amenities */}
+        <div className="relative max-w-4xl mx-auto">
+          {/* Stacked Cards Container */}
+          <div className="relative h-96 flex items-center justify-center">
             {GUEST_AMENITIES.map((amenity, index) => {
               const Icon = amenity.icon;
+              const isSelected = selectedAmenity === index;
+              const isOtherSelected = selectedAmenity !== null && selectedAmenity !== index;
+              
+              // Calculate position for stacked effect
+              const baseOffset = index * 15;
+              const selectedOffset = isSelected ? 0 : (isOtherSelected ? -100 : baseOffset);
+              
               return (
-                <motion.div
+                <div
                   key={index}
-                  className="group relative flex-shrink-0 w-60 h-48 bg-white rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 p-6 flex flex-col items-center justify-center text-center overflow-hidden"
-                  initial={{ opacity: 0, y: 50 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.5 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className={`absolute cursor-pointer transition-all duration-500 ease-out ${
+                    isSelected ? 'z-30' : isOtherSelected ? 'z-10' : 'z-20'
+                  }`}
+                  style={{
+                    transform: `translateX(${selectedOffset}px) translateY(${isSelected ? 0 : baseOffset}px) ${isSelected ? 'scale(1.1)' : 'scale(1)'}`,
+                    opacity: isOtherSelected ? 0.3 : 1
+                  }}
+                  onClick={() => handleAmenityClick(index)}
                 >
-                  <div className="text-teal-500 mb-4">
-                    <Icon className="h-10 w-10" />
+                  <div className={`w-64 bg-white rounded-2xl shadow-lg border-2 transition-all duration-300 ${
+                    isSelected 
+                      ? 'border-teal-400 shadow-2xl h-80' 
+                      : 'border-teal-100 hover:border-teal-300 h-48'
+                  }`}>
+                    {/* Card Header */}
+                    <div className="p-6 flex flex-col items-center justify-center h-48">
+                      <div className={`text-teal-500 mb-4 transition-transform duration-300 ${
+                        isSelected ? 'scale-110' : 'scale-100'
+                      }`}>
+                        <Icon className="h-12 w-12" />
+                      </div>
+                      <h3 className="text-lg font-bold text-gray-800 text-center">{amenity.title}</h3>
+                      {!isSelected && (
+                        <div className="mt-2 text-xs text-teal-600 font-medium">Click to explore</div>
+                      )}
+                    </div>
+                    
+                    {/* Expanded Content */}
+                    {isSelected && (
+                      <div className="px-6 pb-6 border-t border-teal-100">
+                        <div className="pt-4">
+                          <p className="text-sm text-gray-600 leading-relaxed mb-4">
+                            {amenity.description}
+                          </p>
+                          <div className="flex items-center justify-center">
+                            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-teal-100 text-teal-800">
+                              ✓ Included
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    )}
                   </div>
-                  <h3 className="text-lg font-semibold text-gray-800">{amenity.title}</h3>
-                  <div className="absolute inset-0 bg-teal-800/90 text-white p-4 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <p className="text-sm">{amenity.description}</p>
-                  </div>
-                </motion.div>
+                </div>
               );
             })}
           </div>
+          
+          {/* Instructions */}
+          {!isExpanded && (
+            <div className="mt-8 text-center">
+              <p className="text-sm text-gray-500 mb-2">💡 Tap any card to see details</p>
+              <div className="flex justify-center space-x-2">
+                {GUEST_AMENITIES.map((_, index) => (
+                  <div
+                    key={index}
+                    className="w-2 h-2 rounded-full bg-teal-300 opacity-60"
+                  />
+                ))}
+              </div>
+            </div>
+          )}
+          
+          {/* Close button when expanded */}
+          {isExpanded && (
+            <div className="mt-8 text-center">
+              <button
+                onClick={() => {
+                  setSelectedAmenity(null);
+                  setIsExpanded(false);
+                }}
+                className="inline-flex items-center px-4 py-2 bg-teal-100 hover:bg-teal-200 text-teal-700 rounded-full text-sm font-medium transition-colors duration-200"
+              >
+                ← Back to all amenities
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </SectionWrapper>
@@ -481,22 +634,37 @@ const MemoriesMadeSection: React.FC = () => (
 
 
 const journeyContainerVariants = {
-  hidden: { opacity: 1 }, // Parent is initially visible
+  hidden: { opacity: 1 },
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.4,
+      staggerChildren: 0.2,
+    },
+  },
+  exit: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.2,
+      staggerDirection: -1,
     },
   },
 };
 
 const journeyItemVariants = {
-  hidden: { opacity: 0, x: -50 },
+  hidden: { opacity: 0, x: -20 },
   visible: {
     opacity: 1,
     x: 0,
     transition: {
-      duration: 0.8,
+      duration: 0.4,
+      ease: 'easeOut' as const,
+    },
+  },
+  exit: {
+    opacity: 0,
+    x: -20,
+    transition: {
+      duration: 0.4,
       ease: 'easeOut' as const,
     },
   },
@@ -514,7 +682,8 @@ const HowToGetHereSection: React.FC<{ steps: typeof TRANSPORT_STEPS }> = ({ step
         variants={journeyContainerVariants}
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, amount: 0.3 }}
+        exit="exit"
+        viewport={{ once: false, amount: 0.3 }}
       >
         {steps.map((step, index) => {
           const Icon = step.icon;
@@ -546,14 +715,12 @@ const BookingSection: React.FC = () => (
       <AnimatedElement>
         <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-teal-700 mb-4">Ready to Book?</h2>
         <p className="text-lg md:text-xl text-gray-600 mb-6 md:mb-8 max-w-2xl mx-auto">Direct bookings, best rates, and instant answers—just a message away.</p>
-        <motion.a
-          href="https://wa.me/9607905858" target="_blank" rel="noopener noreferrer"
-          className="inline-block bg-orange-500 text-white px-6 md:px-10 py-3 md:py-4 rounded-full font-bold text-lg md:text-xl shadow-lg"
-          whileHover={{ scale: 1.1, boxShadow: '0px 10px 30px rgba(249, 115, 22, 0.4)' }}
-          transition={{ type: 'spring', stiffness: 300 }}
+        <a
+          href="https://wa.me/9609641626" target="_blank" rel="noopener noreferrer"
+          className="inline-block bg-orange-500 text-white px-6 md:px-10 py-3 md:py-4 rounded-full font-bold text-lg md:text-xl shadow-lg hover:scale-105 transition-transform duration-200"
         >
           Book Your Stay on WhatsApp
-        </motion.a>
+        </a>
         <div className="mt-8 md:mt-12 flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-8 opacity-60">
           <p className="font-semibold">✓ Google Reviews 4.9/5</p>
           <p className="font-semibold">✓ Booking.com 9.5/10</p>
@@ -577,7 +744,7 @@ const Footer: React.FC = () => {
       name: 'Instagram',
     },
     {
-      href: 'https://wa.me/9607771988',
+      href: 'https://wa.me/9609641626',
       icon: <WhatsAppIcon className="h-6 w-6" />,
       name: 'WhatsApp',
     },
@@ -600,7 +767,7 @@ const Footer: React.FC = () => {
             <h3 className="text-lg font-bold text-white mb-4">Contact Us</h3>
             <p className="text-sm">Thoddoo, North Ari Atoll</p>
             <p className="text-sm">Maldives</p>
-            <a href="https://wa.me/9607771988" target="_blank" rel="noopener noreferrer" className="text-sm hover:text-teal-400 transition-colors inline-flex items-center space-x-2">
+            <a href="https://wa.me/9609641626" target="_blank" rel="noopener noreferrer" className="text-sm hover:text-teal-400 transition-colors inline-flex items-center space-x-2">
               <WhatsAppIcon className="h-4 w-4" />
               <span>WhatsApp Us</span>
             </a>

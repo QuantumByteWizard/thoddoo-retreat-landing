@@ -71,48 +71,48 @@ export const EXCURSIONS: Excursion[] = [
 
 export const REVIEWS: Review[] = [
   {
-    name: "Alex",
-    location: "United Kingdom",
+    name: "Nikita Martin",
+    location: "Canada",
     rating: 5,
-    text: "The welcome was so warm! Felt at home right away.",
-    avatar: "https://i.pravatar.cc/100?u=a042581f4e29026704d",
+    text: "Very nice and helpful people. Very good local breakfast. They beach is very clean. They took us for snorkeling and turtle safari which was awesome, we seen ref sharks, the eagle ray as well. Beautiful experience.A Must visit.",
+    avatar: "public/icons/man.png",
     date: "July 2024",
     section: "arrival"
   },
   {
-    name: "Maria",
-    location: "Germany",
+    name: "Vladislav",
+    location: "Russia",
     rating: 5,
-    text: "They greeted us at the harbor, smiling and ready to help. The transfer was seamless.",
-    avatar: "https://i.pravatar.cc/100?u=a042581f4e29026704e",
+    text: "I liked the hotel very much. Friendly staff, convenient location, delicious Maldivian breakfast.",
+    avatar: "public/icons/man.png",
     date: "July 2024",
     section: "welcome"
   },
   {
-    name: "Chen",
-    location: "Singapore",
+    name: "Burcay",
+    location: "Netherlands",
     rating: 5,
-    text: "The room was immaculate and so cozy! Slept like a baby.",
-    avatar: "https://i.pravatar.cc/100?u=a042581f4e29026704f",
+    text: "Very clean and big room. The owner is very friendly. We enjoyed our stay with our baby",
+    avatar: "public/icons/man.png",
     date: "June 2024",
     section: "room"
   },
   {
-    name: "Fatima",
-    location: "UAE",
+    name: "AgatheP70",
+    location: "France",
     rating: 5,
-    text: "The snorkeling trip was unforgettable! The staff arranged everything perfectly.",
-    avatar: "https://i.pravatar.cc/100?u=a042581f4e29026704a",
+    text: "The hotel is very nice and comfortable and very well located on the island. The manager took really care of us and offers a lot of activities (snorkeling, banksand, swimming with manta rays...) He knows the sea very well so we felt very safe with him.",
+    avatar: "public/icons/man.png",
     date: "June 2024",
     section: "excursion"
   },
   {
-    name: "Isabelle",
-    location: "France",
+    name: "Pritam Pal",
+    location: "Random",
     rating: 5,
-    text: "The breakfast was the best we had in Maldives! So fresh and delicious.",
-    avatar: "https://i.pravatar.cc/100?u=a042581f4e29026704b",
-    date: "May 2024",
+    text: "Very Friendly Staff. Had stayed 2 nights here during Dec 2017. They helped us with Snorkeling. Great place with Young Kids or Toddlers. They can play with sand all day under shed. Food is also great.",
+    avatar: "public/icons/man.png",
+    date: "December 2017",
     section: "dining"
   }
 ];
