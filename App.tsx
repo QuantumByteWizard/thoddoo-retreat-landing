@@ -1,9 +1,9 @@
 import React, { useRef, useState } from 'react';
-import { motion, useInView, useScroll, useTransform } from 'framer-motion';
-import { REVIEWS, GALLERY_IMAGES, GUEST_AMENITIES, FacebookIcon, InstagramIcon, WhatsAppIcon } from './constants';
-import { TRANSPORT_STEPS } from './constants';
-
+import { motion, useScroll, useTransform, useInView } from 'framer-motion';
+import { REVIEWS, GALLERY_IMAGES, FacebookIcon, InstagramIcon, WhatsAppIcon, TRANSPORT_STEPS, AMENITIES } from './constants';
+import { Analytics } from "@vercel/analytics/react";
 import { HERO_IMAGES } from './unsplash-images';
+import { WhatsAppButton } from './src/components/WhatsAppButton';
 import type { Review } from './types';
 
 // Activity data for flip cards
@@ -29,6 +29,56 @@ const THODDOO_ACTIVITIES = [
     description: "Dine under the stars with your toes in the sand. Fresh seafood, ocean breeze, and unforgettable island romance."
   }
 ];
+
+// --- Reusable Components ---
+
+const fadeIn = {
+  hidden: { opacity: 0, y: 10 },
+  visible: { 
+    opacity: 1, 
+    y: 0, 
+    transition: { 
+      duration: 0.4, 
+      ease: 'easeOut' as const 
+    } 
+  },
+};
+
+const AnimatedElement: React.FC<{ children: React.ReactNode; className?: string; style?: React.CSSProperties }> = React.memo(({ children, className, style }) => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, amount: 0.2, margin: "0px 0px -100px 0px" });
+
+  return (
+    <motion.div
+      ref={ref}
+      initial="hidden"
+      animate={isInView ? 'visible' : 'hidden'}
+      variants={fadeIn}
+      className={className}
+      style={style}
+      layout={false}
+    >
+      {children}
+    </motion.div>
+  );
+});
+
+const ReviewCard: React.FC<{ review: Review; className?: string }> = ({ review, className }) => {
+  return (
+    <AnimatedElement 
+      className={`bg-white p-4 sm:p-6 rounded-xl shadow-lg text-gray-700 max-w-sm ${className}`}
+    >
+      <div className="flex items-center mb-3">
+        <img loading="lazy" src={review.avatar} alt={review.name} className="w-10 h-10 sm:w-12 sm:h-12 rounded-full mr-3 sm:mr-4 border-2 border-teal-100" />
+        <div>
+          <h4 className="font-bold text-sm sm:text-base text-teal-800">{review.name}</h4>
+          <p className="text-sm text-gray-500">{review.location}</p>
+        </div>
+      </div>
+      <p className="italic text-sm sm:text-base">"{review.text}"</p>
+    </AnimatedElement>
+  );
+};
 
 // Flip Card Component
 const ActivityFlipCard: React.FC<{ activity: typeof THODDOO_ACTIVITIES[0] }> = React.memo(({ activity }) => {
@@ -82,169 +132,13 @@ const InteractiveMap: React.FC = () => {
   );
 };
 
-// --- Reusable Components ---
-
-const fadeIn = {
-  hidden: { opacity: 0, y: 10 },
-  visible: { 
-    opacity: 1, 
-    y: 0, 
-    transition: { 
-      duration: 0.4, 
-      ease: 'easeOut' as const 
-    } 
-  },
-};
-
-const AnimatedElement: React.FC<{ children: React.ReactNode; className?: string; style?: React.CSSProperties }> = React.memo(({ children, className, style }) => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.2, margin: "0px 0px -100px 0px" });
-
-  return (
-    <motion.div
-      ref={ref}
-      initial="hidden"
-      animate={isInView ? 'visible' : 'hidden'}
-      variants={fadeIn}
-      className={className}
-      style={style}
-      layout={false}
-    >
-      {children}
-    </motion.div>
-  );
-});
-
-const InteractiveFeatureCards: React.FC = () => {
-  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
-  
-  const features = [
-    {
-      emoji: "🏆",
-      title: "Couples' Paradise Island",
-      preview: "#1 Romantic Destination",
-      details: "Consistently rated #1 romantic island by travel bloggers. Perfect sunsets, private beaches, and intimate dining experiences."
-    },
-    {
-      emoji: "🏖️",
-      title: "World-Class Beach Access",
-      preview: "Crystal Clear Waters",
-      details: "Top-rated beach in Maldives with pristine white sand, crystal-clear turquoise waters, and excellent snorkeling spots."
-    },
-    {
-      emoji: "🍽️",
-      title: "Best Breakfast Experience",
-      preview: "Fresh Tropical Fruits",
-      details: "Complimentary breakfast featuring fresh tropical fruits, local delicacies, and international favorites served daily."
-    },
-    {
-      emoji: "🚤",
-      title: "Adventure Hub Location",
-      preview: "Easy Boat Access",
-      details: "Strategic location with easy boat access to all excursions, diving spots, fishing trips, and island hopping adventures."
-    },
-    {
-      emoji: "👥",
-      title: "Legendary Hospitality",
-      preview: "Warmest Community",
-      details: "Experience the warmest, most welcoming island community in Maldives with genuine local hospitality and cultural immersion."
-    },
-    {
-      emoji: "💰",
-      title: "True Budget Value",
-      preview: "Premium at Budget Prices",
-      details: "Enjoy premium resort-style experience at budget hotel prices. Exceptional value without compromising on quality or comfort."
-    }
-  ];
-
-  return (
-    <div className="text-center mb-8">
-      <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">
-        Why Choose Thoddoo Island?
-      </h3>
-      <p className="text-slate-300 mb-8 max-w-2xl mx-auto">
-        Hover over each feature to discover what makes us special
-      </p>
-      
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {features.map((feature, index) => (
-          <div
-            key={index}
-            className="relative bg-slate-700 rounded-xl p-6 border border-slate-600 cursor-pointer transition-all duration-300 hover:bg-slate-600 hover:border-emerald-400 hover:scale-105 group"
-            onMouseEnter={() => setHoveredCard(index)}
-            onMouseLeave={() => setHoveredCard(null)}
-          >
-            <div className="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300">
-              {feature.emoji}
-            </div>
-            
-            <h4 className="font-bold text-emerald-400 text-lg mb-3 group-hover:text-emerald-300">
-              {feature.title}
-            </h4>
-            
-            <div className="text-slate-300 text-sm leading-relaxed">
-              {hoveredCard === index ? (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  {feature.details}
-                </motion.div>
-              ) : (
-                <div className="text-slate-400">
-                  {feature.preview}
-                  <div className="text-xs mt-2 text-emerald-400 opacity-70">
-                    Hover to explore →
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-        ))}
-      </div>
-      
-      <div className="mt-8">
-        <button
-          onClick={() => {
-            const bookingSection = document.querySelector('section[class*="bg-gray-50"]');
-            bookingSection?.scrollIntoView({ behavior: 'smooth' });
-          }}
-          className="bg-emerald-500 hover:bg-emerald-600 text-white px-8 py-3 rounded-full font-bold text-lg transition-all duration-300 hover:scale-105 shadow-lg"
-        >
-          Book Now
-        </button>
-      </div>
-    </div>
-  );
-};
-
-const ReviewCard: React.FC<{ review: Review; className?: string }> = ({ review, className }) => {
-  return (
-    <AnimatedElement 
-      className={`bg-white p-4 sm:p-6 rounded-xl shadow-lg text-gray-700 max-w-sm ${className}`}
-    >
-      <div className="flex items-center mb-3">
-        <img loading="lazy" src={review.avatar} alt={review.name} className="w-10 h-10 sm:w-12 sm:h-12 rounded-full mr-3 sm:mr-4 border-2 border-teal-100" />
-        <div>
-          <h4 className="font-bold text-sm sm:text-base text-teal-800">{review.name}</h4>
-          <p className="text-sm text-gray-500">{review.location}</p>
-        </div>
-      </div>
-      <p className="italic text-sm sm:text-base">"{review.text}"</p>
-    </AnimatedElement>
-  );
-};
-
-
-
-// --- Story Sections ---
-
-const SectionWrapper = React.forwardRef<HTMLElement, { children: React.ReactNode; className?: string }>(({ children, className }, ref) => (
-  <section ref={ref} className={`min-h-screen w-full relative flex items-center justify-center text-center py-12 md:py-16 lg:py-20 ${className || ''}`}>
+const SectionWrapper = React.forwardRef<HTMLElement, { children: React.ReactNode; className?: string; id?: string }>(({ children, className, id }, ref) => (
+  <section ref={ref} id={id} className={`min-h-screen w-full relative flex items-center justify-center text-center py-12 md:py-16 lg:py-20 ${className || ''}`}>
     {children}
   </section>
 ));
+
+// --- Page Sections ---
 
 const ArrivalSection: React.FC = () => {
   const arrivalReview = REVIEWS.find(r => r.section === 'arrival');
@@ -288,62 +182,81 @@ const ArrivalSection: React.FC = () => {
 };
 
 const ProblemSolutionSection: React.FC = () => {
+  const InteractiveFeatureCards: React.FC = () => {
+    const [hoveredCard, setHoveredCard] = useState<number | null>(null);
+    const features = [
+      { emoji: "🏆", title: "Couples' Paradise Island", preview: "#1 Romantic Destination", details: "Consistently rated #1 romantic island by travel bloggers. Perfect sunsets, private beaches, and intimate dining experiences." },
+      { emoji: "🏖️", title: "World-Class Beach Access", preview: "Crystal Clear Waters", details: "Top-rated beach in Maldives with pristine white sand, crystal-clear turquoise waters, and excellent snorkeling spots." },
+      { emoji: "🍽️", title: "Best Breakfast Experience", preview: "Fresh Tropical Fruits", details: "Complimentary breakfast featuring fresh tropical fruits, local delicacies, and international favorites served daily." },
+      { emoji: "🚤", title: "Adventure Hub Location", preview: "Easy Boat Access", details: "Strategic location with easy boat access to all excursions, diving spots, fishing trips, and island hopping adventures." },
+      { emoji: "👥", title: "Legendary Hospitality", preview: "Warmest Community", details: "Experience the warmest, most welcoming island community in Maldives with genuine local hospitality and cultural immersion." },
+      { emoji: "💰", title: "True Budget Value", preview: "Premium at Budget Prices", details: "Enjoy premium resort-style experience at budget hotel prices. Exceptional value without compromising on quality or comfort." }
+    ];
+
+    return (
+      <div className="text-center">
+        <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">Why Choose Thoddoo Island?</h3>
+        <p className="text-slate-300 mb-8 max-w-2xl mx-auto">Hover over each feature to discover what makes us special</p>
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {features.map((feature, index) => (
+            <div
+              key={index}
+              className="relative bg-slate-700 rounded-xl p-6 border border-slate-600 cursor-pointer transition-all duration-300 hover:bg-slate-600 hover:border-emerald-400 hover:scale-105 group"
+              onMouseEnter={() => setHoveredCard(index)}
+              onMouseLeave={() => setHoveredCard(null)}
+            >
+              <div className="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300">{feature.emoji}</div>
+              <h4 className="font-bold text-emerald-400 text-lg mb-3 group-hover:text-emerald-300">{feature.title}</h4>
+              <div className="text-slate-300 text-sm leading-relaxed h-16 flex items-center justify-center">
+                {hoveredCard === index ? (
+                  <motion.p initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }}>{feature.details}</motion.p>
+                ) : (
+                  <p className="text-slate-400 font-medium">{feature.preview}</p>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  };
+
   return (
     <section className="min-h-screen bg-slate-900 text-white py-12 md:py-20">
       <div className="container mx-auto px-4 md:px-6 text-center">
-
-        {/* 1. Problem Section */}
         <AnimatedElement className="mb-16">
-          <div className="inline-block bg-red-500/10 text-red-400 px-6 py-2 rounded-full text-sm font-semibold border border-red-500/30 mb-8">
-            ⚠️ The Island Search Struggle
-          </div>
+          <div className="inline-block bg-red-500/10 text-red-400 px-6 py-2 rounded-full text-sm font-semibold border border-red-500/30 mb-8">⚠️ The Island Search Struggle</div>
           <motion.h1 
             className="text-4xl md:text-6xl font-black leading-tight mb-6 bg-gradient-to-r from-red-500 via-orange-400 to-yellow-500 bg-clip-text text-transparent animate-gradient"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: "easeOut" }}
             viewport={{ once: true, amount: 0.3 }}
-          >
-            Overwhelmed by Endless Maldives Island Options?
-          </motion.h1>
-          <p className="max-w-3xl mx-auto text-lg md:text-xl text-slate-400 mb-12">
-            Scrolling through hundreds of <strong>Maldives islands</strong> and <strong>guesthouses</strong>, comparing prices, and still having no idea which <strong>island</strong> gives you the perfect balance of budget, beauty, and authentic experiences?
-          </p>
+          >Overwhelmed by Endless Maldives Island Options?</motion.h1>
+          <p className="text-slate-300 mb-12 max-w-3xl mx-auto">Scrolling through hundreds of <strong>Maldives islands</strong> and <strong>guesthouses</strong>, comparing prices, and still having no idea which <strong>island</strong> gives you the perfect balance of budget, beauty, and authentic experiences?</p>
           <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-            <div className="bg-red-900/20 border border-red-500/30 rounded-lg p-6">
+            <div className="bg-red-900/20 border border-red-500/30 rounded-lg p-6 transition-all duration-300 hover:border-red-400 hover:shadow-[0_0_25px_rgba(239,68,68,0.5)] hover:scale-105">
               <h4 className="font-bold text-red-400 text-lg mb-2">Analysis Paralysis</h4>
-              <p className="text-slate-400">120+ local islands, countless guesthouses, endless comparison sites.</p>
+              <p className="text-slate-300">120+ local islands, countless guesthouses, endless comparison sites.</p>
             </div>
-            <div className="bg-red-900/20 border border-red-500/30 rounded-lg p-6">
+            <div className="bg-red-900/20 border border-red-500/30 rounded-lg p-6 transition-all duration-300 hover:border-red-400 hover:shadow-[0_0_25px_rgba(239,68,68,0.5)] hover:scale-105">
               <h4 className="font-bold text-red-400 text-lg mb-2">Budget Uncertainty</h4>
-              <p className="text-slate-400">Hidden costs, surprise fees, unclear breakfast inclusions.</p>
+              <p className="text-slate-300">Hidden costs, surprise fees, unclear breakfast inclusions.</p>
             </div>
-            <div className="bg-red-900/20 border border-red-500/30 rounded-lg p-6">
+            <div className="bg-red-900/20 border border-red-500/30 rounded-lg p-6 transition-all duration-300 hover:border-red-400 hover:shadow-[0_0_25px_rgba(239,68,68,0.5)] hover:scale-105">
               <h4 className="font-bold text-red-400 text-lg mb-2">Location Confusion</h4>
-              <p className="text-slate-400">Which islands have good beaches? Activities? Food options?</p>
+              <p className="text-slate-300">Which islands have good beaches? Activities? Food options?</p>
             </div>
           </div>
         </AnimatedElement>
-
-        {/* 2. Solution Section */}
         <AnimatedElement className="mb-16">
-          <div className="inline-block bg-emerald-500/10 text-emerald-400 px-8 py-3 rounded-full font-bold border-2 border-emerald-500/30 mb-8">
-            ✅ Your Search Ends Here
-          </div>
-          <h2 className="text-3xl md:text-5xl font-black leading-tight mb-6 bg-gradient-to-r from-emerald-400 via-cyan-400 to-blue-500 bg-clip-text text-transparent">
-            Meet <span className="bg-gradient-to-r from-orange-400 to-yellow-500 bg-clip-text text-transparent">Thoddoo Retreat</span> - The Smart Traveler's Choice
-          </h2>
-          <p className="max-w-3xl mx-auto text-lg md:text-xl text-slate-300 font-medium">
-            Stop the endless research. <strong>Thoddoo</strong> is the <strong>island</strong> that experienced travelers choose most - and <strong>Thoddoo Retreat</strong> is the top-rated <strong>budget guesthouse</strong> that delivers everything you're looking for.
-          </p>
+          <div className="inline-block bg-emerald-500/10 text-emerald-400 px-8 py-3 rounded-full font-bold border-2 border-emerald-500/30 mb-8">✅ Your Search Ends Here</div>
+          <h2 className="text-3xl md:text-5xl font-black leading-tight mb-6 bg-gradient-to-r from-emerald-400 via-cyan-400 to-blue-500 bg-clip-text text-transparent">Meet <span className="bg-gradient-to-r from-orange-400 to-yellow-500 bg-clip-text text-transparent">Thoddoo Retreat Grand</span> - The Smart Traveler's Choice</h2>
+          <p className="text-lg text-slate-300 font-medium max-w-3xl mx-auto">Stop the endless research. <strong>Thoddoo</strong> is the <strong>island</strong> that experienced travelers choose most - and <strong>Thoddoo Retreat Grand</strong> is the top-rated <strong>budget guesthouse</strong> that delivers everything you're looking for.</p>
         </AnimatedElement>
-
-        {/* 3. Interactive Proof Section */}
         <AnimatedElement className="bg-slate-800 rounded-2xl p-8 md:p-12 border border-slate-700 mb-16">
           <InteractiveFeatureCards />
         </AnimatedElement>
-
-
       </div>
     </section>
   );
@@ -368,13 +281,8 @@ const FirstImpressionsSection: React.FC = () => {
 
 const RoomSanctuarySection: React.FC = () => {
   const ref = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ['start end', 'end start']
-  });
-
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
   const y1 = useTransform(scrollYProgress, [0, 1], ['-10%', '10%']);
-
   const roomReview = REVIEWS.find(r => r.section === 'room');
 
   return (
@@ -386,12 +294,7 @@ const RoomSanctuarySection: React.FC = () => {
         </AnimatedElement>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-4 items-center">
           <motion.div className="md:col-span-1" style={{ y: y1 }}>
-            <img
-              loading="lazy"
-              alt="Modern guesthouse room"
-              className="rounded-lg shadow-xl w-full max-w-xs mx-auto h-48 sm:h-56 md:h-64 object-cover"
-              src={GALLERY_IMAGES[1].src}
-            />
+            <img loading="lazy" alt="Modern guesthouse room" className="rounded-lg shadow-xl w-full max-w-xs mx-auto h-48 sm:h-56 md:h-64 object-cover" src={GALLERY_IMAGES[1].src} />
           </motion.div>
           <div className="md:col-span-1 flex justify-center">
             {roomReview && <ReviewCard review={roomReview} />}
@@ -479,145 +382,57 @@ const EverydayMagicSection: React.FC = () => {
             <p className="text-base md:text-lg text-gray-600 mb-6 md:mb-8">Start your day with a homemade Maldivian breakfast in our peaceful garden, crafted with fresh, local ingredients.</p>
             {diningReview && <ReviewCard review={diningReview} />}
           </AnimatedElement>
-          <div className="flex justify-center">
-            <motion.img 
-              loading="lazy" 
-              src={GALLERY_IMAGES[3].src} 
-              alt="Maldivian breakfast" 
-              className="rounded-lg shadow-xl max-w-sm md:max-w-md w-full h-64 md:h-80 object-cover"
-              style={{ y }}
+          <motion.div style={{ y }} className="relative w-full aspect-video rounded-xl overflow-hidden shadow-lg">
+            <img
+              src={GALLERY_IMAGES[4].src}
+              alt={GALLERY_IMAGES[4].alt}
+              className="w-full h-full object-cover"
+              loading="lazy"
+              decoding="async"
             />
-          </div>
+            <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent"></div>
+          </motion.div>
         </div>
       </div>
     </SectionWrapper>
   );
 };
 
-const AmenitiesSection: React.FC = () => {
-  const [selectedAmenity, setSelectedAmenity] = React.useState<number | null>(null);
-  const [isExpanded, setIsExpanded] = React.useState(false);
-
-  const handleAmenityClick = (index: number) => {
-    if (selectedAmenity === index) {
-      setSelectedAmenity(null);
-      setIsExpanded(false);
-    } else {
-      setSelectedAmenity(index);
-      setIsExpanded(true);
-    }
-  };
-
+const AmenitiesSection = () => {
   return (
-    <SectionWrapper className="bg-slate-50">
-      <div className="container mx-auto px-4 md:px-6 text-center">
-        <AnimatedElement>
-          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-teal-700 mb-4">Our Guest Amenities</h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-12">Click on any amenity to explore what we offer</p>
-        </AnimatedElement>
-        
-        {/* Interactive Stacked Amenities */}
-        <div className="relative max-w-4xl mx-auto">
-          {/* Stacked Cards Container */}
-          <div className="relative h-96 flex items-center justify-center">
-            {GUEST_AMENITIES.map((amenity, index) => {
-              const Icon = amenity.icon;
-              const isSelected = selectedAmenity === index;
-              const isOtherSelected = selectedAmenity !== null && selectedAmenity !== index;
-              
-              // Calculate position for stacked effect
-              const baseOffset = index * 15;
-              const selectedOffset = isSelected ? 0 : (isOtherSelected ? -100 : baseOffset);
-              
-              return (
-                <div
-                  key={index}
-                  className={`absolute cursor-pointer transition-all duration-500 ease-out ${
-                    isSelected ? 'z-30' : isOtherSelected ? 'z-10' : 'z-20'
-                  }`}
-                  style={{
-                    transform: `translateX(${selectedOffset}px) translateY(${isSelected ? 0 : baseOffset}px) ${isSelected ? 'scale(1.1)' : 'scale(1)'}`,
-                    opacity: isOtherSelected ? 0.3 : 1
-                  }}
-                  onClick={() => handleAmenityClick(index)}
-                >
-                  <div className={`w-64 bg-white rounded-2xl shadow-lg border-2 transition-all duration-300 ${
-                    isSelected 
-                      ? 'border-teal-400 shadow-2xl h-80' 
-                      : 'border-teal-100 hover:border-teal-300 h-48'
-                  }`}>
-                    {/* Card Header */}
-                    <div className="p-6 flex flex-col items-center justify-center h-48">
-                      <div className={`text-teal-500 mb-4 transition-transform duration-300 ${
-                        isSelected ? 'scale-110' : 'scale-100'
-                      }`}>
-                        <Icon className="h-12 w-12" />
-                      </div>
-                      <h3 className="text-lg font-bold text-gray-800 text-center">{amenity.title}</h3>
-                      {!isSelected && (
-                        <div className="mt-2 text-xs text-teal-600 font-medium">Click to explore</div>
-                      )}
-                    </div>
-                    
-                    {/* Expanded Content */}
-                    {isSelected && (
-                      <div className="px-6 pb-6 border-t border-teal-100">
-                        <div className="pt-4">
-                          <p className="text-sm text-gray-600 leading-relaxed mb-4">
-                            {amenity.description}
-                          </p>
-                          <div className="flex items-center justify-center">
-                            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-teal-100 text-teal-800">
-                              ✓ Included
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    )}
+    <section className="bg-gray-50/50 py-16 sm:py-24">
+      <div className="container mx-auto px-4">
+        <div className="text-center mb-12">
+          <AnimatedElement>
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-teal-700 mb-4">Everything You Need</h2>
+            <p className="text-base md:text-lg text-gray-600 max-w-2xl mx-auto">From modern comforts to thoughtful extras, we've got you covered for a seamless and memorable stay.</p>
+          </AnimatedElement>
+        </div>
+        <div className="max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-10">
+            {AMENITIES.map((amenity) => (
+              <AnimatedElement key={amenity.title}>
+                <div className="flex items-start space-x-4">
+                  <div className="flex-shrink-0 bg-teal-100 p-3 rounded-full mt-1">
+                    {React.cloneElement(amenity.icon, { className: 'w-6 h-6 text-teal-600' })}
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-bold text-gray-800">{amenity.title}</h3>
+                    <p className="text-gray-600 mt-1">{amenity.description}</p>
                   </div>
                 </div>
-              );
-            })}
+              </AnimatedElement>
+            ))}
           </div>
-          
-          {/* Instructions */}
-          {!isExpanded && (
-            <div className="mt-8 text-center">
-              <p className="text-sm text-gray-500 mb-2">💡 Tap any card to see details</p>
-              <div className="flex justify-center space-x-2">
-                {GUEST_AMENITIES.map((_, index) => (
-                  <div
-                    key={index}
-                    className="w-2 h-2 rounded-full bg-teal-300 opacity-60"
-                  />
-                ))}
-              </div>
-            </div>
-          )}
-          
-          {/* Close button when expanded */}
-          {isExpanded && (
-            <div className="mt-8 text-center">
-              <button
-                onClick={() => {
-                  setSelectedAmenity(null);
-                  setIsExpanded(false);
-                }}
-                className="inline-flex items-center px-4 py-2 bg-teal-100 hover:bg-teal-200 text-teal-700 rounded-full text-sm font-medium transition-colors duration-200"
-              >
-                ← Back to all amenities
-              </button>
-            </div>
-          )}
         </div>
       </div>
-    </SectionWrapper>
+    </section>
   );
 };
 
 const MemoriesMadeSection: React.FC = () => (
-  <SectionWrapper className="bg-teal-500 text-white">
-    <div className="container mx-auto px-4 md:px-6 text-center">
+  <SectionWrapper className="bg-gray-800 text-white" id="reviews">
+    <div className="container mx-auto px-6">
       <AnimatedElement>
         <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 md:mb-6">Memories That Last a Lifetime</h2>
         <p className="text-base md:text-lg opacity-90 max-w-2xl mx-auto mb-8 md:mb-12">See why so many of our guests become friends and return year after year. Your story is next.</p>
@@ -628,10 +443,6 @@ const MemoriesMadeSection: React.FC = () => (
     </div>
   </SectionWrapper>
 );
-
-
-
-
 
 const journeyContainerVariants = {
   hidden: { opacity: 1 },
@@ -685,25 +496,23 @@ const HowToGetHereSection: React.FC<{ steps: typeof TRANSPORT_STEPS }> = ({ step
         exit="exit"
         viewport={{ once: false, amount: 0.3 }}
       >
-        {steps.map((step, index) => {
-          const Icon = step.icon;
-          return (
+        {steps.map((step, index) => (
             <React.Fragment key={step.title}>
               <motion.div
                 variants={journeyItemVariants}
                 className="flex flex-col items-center text-center"
               >
                 <div className="flex-shrink-0 w-16 h-16 bg-teal-500/10 rounded-full flex items-center justify-center border-2 border-teal-500/30">
-                  <Icon className="w-8 h-8 text-teal-300" />
+                  {React.cloneElement(step.icon, { className: 'h-8 w-8 text-teal-300' })}
                 </div>
                 <h3 className="font-bold mt-4 text-gray-800">{step.title}</h3>
+                <p className="text-sm text-gray-600 mt-1">{step.description}</p>
               </motion.div>
               {index < steps.length - 1 && (
                 <motion.div variants={journeyItemVariants} className="text-2xl text-teal-300 font-thin hidden sm:block">→</motion.div>
               )}
             </React.Fragment>
-          );
-        })}
+        ))}
       </motion.div>
     </div>
   </SectionWrapper>
@@ -820,6 +629,8 @@ const App: React.FC = () => {
         <BookingSection />
         <Footer />
       </main>
+      <WhatsAppButton />
+      <Analytics />
     </div>
   );
 };

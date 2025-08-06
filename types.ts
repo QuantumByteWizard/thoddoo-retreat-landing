@@ -4,9 +4,10 @@ import React from 'react';
 export type IconComponent = React.FC<React.SVGProps<SVGSVGElement>>;
 
 export interface Amenity {
-  icon: IconComponent;
+  icon: React.ReactElement<{ className?: string }>;
   title: string;
   description: string;
+  image: string;
 }
 
 export interface Excursion extends Amenity {}
@@ -27,7 +28,7 @@ export interface GalleryImage {
 }
 
 export interface TransportStep {
-    icon: IconComponent;
+    icon: React.ReactElement<{ className?: string }>;
     title: string;
     description: string;
 }

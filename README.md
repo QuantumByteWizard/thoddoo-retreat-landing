@@ -1,6 +1,6 @@
-# Thoddoo Retreat Landing Page
+# Thoddoo Retreat Grand Landing Page
 
-A modern, responsive landing page for Thoddoo Retreat guesthouse in the Maldives. Built with React, TypeScript, Tailwind CSS, and Framer Motion for smooth animations and optimal performance.
+A modern, responsive landing page for Thoddoo Retreat Grand guesthouse in the Maldives. Built with React, TypeScript, Tailwind CSS, and Framer Motion for smooth animations and optimal performance.
 
 ## ✨ Features
 

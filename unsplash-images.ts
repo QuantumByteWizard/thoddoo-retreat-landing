@@ -1,4 +1,4 @@
-// Unsplash image URLs for the Thoddoo Retreat landing page
+// Unsplash image URLs for the Thoddoo Retreat Grand landing page
 // These are high-quality, royalty-free images from Unsplash
 
 export const HERO_IMAGES = [

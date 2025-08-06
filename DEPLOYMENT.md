@@ -1,4 +1,4 @@
-# Deployment Guide - Thoddoo Retreat Landing Page
+# Deployment Guide - Thoddoo Retreat Grand Landing Page
 
 ## 🚀 Production Ready Checklist
 

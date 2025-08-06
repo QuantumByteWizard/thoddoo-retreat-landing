@@ -8,8 +8,13 @@ export const LeafIcon = (props: React.SVGProps<SVGSVGElement>) => (
   </svg>
 );
 
-export const AcIcon = (props: React.SVGProps<SVGSVGElement>) => <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-teal-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" {...props}><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15H4a2 2 0 01-2-2V7a2 2 0 012-2h1m11 10h1a2 2 0 002-2V7a2 2 0 00-2-2h-1m-6 4l-3 3m0 0l3 3m-3-3h12" /></svg>;
-export const WifiIcon = (props: React.SVGProps<SVGSVGElement>) => <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-teal-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" {...props}><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.111 16.555a5.5 5.5 0 017.778 0M12 20.5v.01m-4.243-4.243a8 8 0 0111.314 0M4.929 12.929a10.5 10.5 0 0114.142 0" /></svg>;
+export const AcIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" {...props}>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
+  </svg>
+);
+
+
 export const BathroomIcon = (props: React.SVGProps<SVGSVGElement>) => <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-teal-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" {...props}><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m11-13v4m-2-2h4m-4 10v4m-2-2h4M12 3v18" /></svg>;
 export const BreakfastIcon = (props: React.SVGProps<SVGSVGElement>) => <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-teal-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" {...props}><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M3 14h18M11 3v4M7 7h10M5 21h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg>;
 export const ExcursionIcon = (props: React.SVGProps<SVGSVGElement>) => <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-teal-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" {...props}><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" /></svg>;
@@ -23,7 +28,7 @@ export const TurtleIcon = (props: React.SVGProps<SVGSVGElement>) => <svg classNa
 export const SandbankIcon = (props: React.SVGProps<SVGSVGElement>) => <svg className="h-6 w-6 text-teal-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M12 2L9 8h6L12 2z"/><path d="M12 22a7 7 0 0 0-7-7c0-2 1-4 3-5s4-2 6-2 4 1 6 2 3 3 3 5a7 7 0 0 0-7 7z"/><path d="M12 15v7"/></svg>;
 export const DolphinIcon = (props: React.SVGProps<SVGSVGElement>) => <svg className="h-6 w-6 text-teal-500" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" {...props}><path d="M13.31 3.23c-2.42.22-4.52,1.62-5.74,3.64-1.14,1.89-1.3,4.3-1.04,6.6.28,2.45,1.24,4.7,2.83,6.47 1.84,2.06,4.3,3.21,6.9,3.21,1.54,0,3.03-.4,4.38-1.16a.75.75 0 00.5-1.12l-1.39-2.31a.75.75 0 00-1.08-.43c-2.28.94-4.26,0-5.32-2.18-.8-1.63-.58-3.8.53-5.32 1.25-1.72,3.12-2.47,5.03-2.18a.75.75 0 00.8-.68l.4-3.83a.75.75 0 00-.73-.82z"/></svg>;
 
-export const RoomServiceIcon = (props: React.SVGProps<SVGSVGElement>) => <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-teal-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" {...props}><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-3-3h-2a3 3 0 00-3 3v2h5zM17 8a4 4 0 11-8 0 4 4 0 018 0z" /></svg>;
+
 export const LaundryIcon = (props: React.SVGProps<SVGSVGElement>) => <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-teal-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" {...props}><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M3 14h18M9 20v-6a3 3 0 013-3h0a3 3 0 013 3v6m-6 0h6" /></svg>;
 export const ExpertAdviceIcon = (props: React.SVGProps<SVGSVGElement>) => <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-teal-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" {...props}><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a2 2 0 01-2.828 0l-4.243-4.243a2 2 0 010-2.828l4.243-4.243a2 2 0 012.828 0l4.243 4.243a2 2 0 010 2.828z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>;
 
@@ -43,30 +48,43 @@ export const InstagramIcon = (props: React.SVGProps<SVGSVGElement>) => (
   </svg>
 );
 
-export const WhatsAppIcon = (props: React.SVGProps<SVGSVGElement>) => (
-    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" {...props}>
-        <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.894 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.886-.001 2.267.651 4.383 1.803 6.246l-1.12 4.093 4.233-1.11z" />
-    </svg>
+export const WhatsAppIcon = (props: React.HTMLAttributes<HTMLImageElement>) => (
+  <img src="/icons/whatsapp.svg" alt="whatsapp icon" {...props} />
 );
 
+export const AirIcon = (props: React.HTMLAttributes<HTMLImageElement>) => (
+  <img src="/icons/air.svg" alt="air icon" {...props} />
+);
 
+export const RoomServiceIcon = (props: React.HTMLAttributes<HTMLImageElement>) => (
+  <img src="/icons/roomservice.svg" alt="room service icon" {...props} />
+);
 
+export const WifiIcon = (props: React.HTMLAttributes<HTMLImageElement>) => (
+  <img src="/icons/wifi.svg" alt="wifi icon" {...props} />
+);
+
+export const BikeIcon = (props: React.HTMLAttributes<HTMLImageElement>) => (
+  <img src="/icons/bike.svg" alt="bike icon" {...props} />
+);
 
 // Data
 export const AMENITIES: Amenity[] = [
-  { icon: AcIcon, title: "Modern AC Rooms", description: "Relax in comfort with king-size beds and powerful AC." },
-  { icon: WifiIcon, title: "Free High-Speed Wi-Fi", description: "Stay connected with complimentary internet access." },
-  { icon: BathroomIcon, title: "Private Bathrooms", description: "Your own stylish bathroom with free toiletries." },
-  { icon: BreakfastIcon, title: "Maldivian Breakfast", description: "Start your day with delicious local or continental options." },
-  { icon: BicycleIcon, title: "Free Bicycles", description: "Explore the beautiful island of Thoddoo at your own pace." },
-  { icon: TransferIcon, title: "Airport Transfer", description: "We arrange seamless speedboat transfers from Malé airport." },
+  { icon: <AirIcon />, title: 'Modern AC Rooms', description: 'Relax in our cool, comfortable rooms after a day in the sun.', image: '/images/guesthouse-room.jpg' },
+  { icon: <RoomServiceIcon />, title: 'Room Service', description: 'Enjoy delicious meals in the comfort of your room.', image: 'https://images.unsplash.com/photo-1560202589-946504a33924?q=80&w=2070&auto=format&fit=crop' },
+  { icon: <WifiIcon />, title: 'Free High-Speed Wi-Fi', description: 'Stay connected with fast and reliable internet throughout the guesthouse.', image: 'https://images.unsplash.com/photo-1554415707-6e8cfc93fe23?q=80&w=2070&auto=format&fit=crop' },
+  { icon: <BikeIcon />, title: 'Free Bicycles', description: 'Explore the island at your own pace with our complimentary bikes.', image: 'https://images.unsplash.com/photo-1576487248795-e6318146d334?q=80&w=2070&auto=format&fit=crop' },
+  { icon: <BreakfastIcon />, title: 'Maldivian Breakfast', description: 'Start your day with a delicious, authentic local breakfast.', image: '/images/breakfast.jpg' },
+
+  { icon: <ExcursionIcon />, title: 'Excursion Planning', description: 'Let us help you plan unforgettable adventures and experiences.', image: 'https://wildmaldives.com/media/images/c234b684-2a6c-48be-b166-5e5890885d56-1.jpg' },
+  { icon: <RoomServiceIcon />, title: 'Room Service', description: 'Enjoy meals and refreshments in the comfort of your room.', image: 'https://images.unsplash.com/photo-1568084680786-84e182d19a2d?q=80&w=1962&auto=format&fit=crop' },
 ];
 
 export const EXCURSIONS: Excursion[] = [
-    { icon: MantaIcon, title: "Manta & Nurse Shark Snorkeling", description: "Get up close with majestic manta rays and gentle nurse sharks." },
-    { icon: TurtleIcon, title: "Turtle Reef Snorkeling", description: "Swim alongside beautiful sea turtles in their natural habitat." },
-    { icon: SandbankIcon, title: "Sandbank Trip", description: "Relax on a pristine, secluded sandbank in the middle of the ocean." },
-    { icon: DolphinIcon, title: "Dolphin Cruise", description: "Watch playful dolphins jump and race alongside the boat at sunset." },
+    { icon: <MantaIcon />, title: "Manta & Nurse Shark Snorkeling", description: "Get up close with majestic manta rays and gentle nurse sharks.", image: 'https://images.unsplash.com/photo-1593179576748-44f0b3c6c3a8?q=80&w=2070&auto=format&fit=crop' },
+    { icon: <TurtleIcon />, title: "Turtle Reef Snorkeling", description: "Swim alongside beautiful sea turtles in their natural habitat.", image: 'https://images.unsplash.com/photo-1551893478-d726eaf0442c?q=80&w=2070&auto=format&fit=crop' },
+    { icon: <SandbankIcon />, title: "Sandbank Trip", description: "Relax on a pristine, secluded sandbank in the middle of the ocean.", image: 'https://images.unsplash.com/photo-1590523741831-ab7e8b8f9c7f?q=80&w=1974&auto=format&fit=crop' },
+    { icon: <DolphinIcon />, title: "Dolphin Cruise", description: "Watch playful dolphins jump and race alongside the boat at sunset.", image: 'https://images.unsplash.com/photo-1560942485-b2a1a6f8f5b8?q=80&w=2070&auto=format&fit=crop' },
 ];
 
 export const REVIEWS: Review[] = [
@@ -118,26 +136,26 @@ export const REVIEWS: Review[] = [
 ];
 
 export const GALLERY_IMAGES: GalleryImage[] = [
-    { src: "/images/guesthouse-exterior.jpg", alt: "Exterior view of Thoddoo Retreat, a modern guesthouse in Maldives" },
-    { src: "/images/guesthouse-room.jpg", alt: "Deluxe double room at Thoddoo Retreat guesthouse with modern decor" },
+    { src: "/images/guesthouse-exterior.jpg", alt: "Exterior view of Thoddoo Retreat Grand, a modern guesthouse in Maldives" },
+    { src: "/images/guesthouse-room.jpg", alt: "Deluxe double room at Thoddoo Retreat Grand guesthouse with modern decor" },
     { src: "https://wildmaldives.com/media/images/2208f2e4-e7ea-43d9-a548-6a581404e8d3-1.jpg", alt: "Guest relaxing on a hammock on the white sand of Thoddoo Bikini Beach" },
-    { src: "/images/breakfast.jpg", alt: "Healthy Maldivian breakfast served at Thoddoo Retreat" },
-    { src: "https://wildmaldives.com/media/images/c234b684-2a6c-48be-b166-5e5890885d56-1.jpg", alt: "Tourist snorkeling with a green sea turtle near Thoddoo island" },
+    { src: "/images/breakfast.jpg", alt: "Healthy Maldivian breakfast served at Thoddoo Retreat Grand" },
+    { src: "/images/breakfast.jpg", alt: "Delicious Maldivian breakfast served in the garden" },
     { src: "https://wildmaldives.com/media/images/2b761dd7-c373-4ac0-a629-873b88b7f87e.jpg", alt: "Majestic manta ray swimming in the waters of the Maldivian atoll" },
 ];
 
 export const GUEST_AMENITIES: Amenity[] = [
-  { icon: RoomServiceIcon, title: "Daily Room Service", description: "Our team ensures your room is clean and comfortable every day." },
-  { icon: WifiIcon, title: "Free WiFi", description: "High-speed internet to keep you connected during your stay." },
-  { icon: LaundryIcon, title: "Laundry Service", description: "Convenient laundry service is available upon request." },
-  { icon: ExpertAdviceIcon, title: "Local Expert Advice", description: "Get the best tips on what to see and do from our knowledgeable staff." },
-  { icon: TransferIcon, title: "Airport Transfers", description: "Seamless and hassle-free transfers from the airport to our guesthouse." },
-  { icon: ExcursionIcon, title: "Island Excursions", description: "We help you book unforgettable trips and tours around the island." },
-  { icon: BreakfastIcon, title: "Complimentary Breakfast", description: "Enjoy a delicious, free breakfast to start your day right." },
+  { icon: <RoomServiceIcon />, title: "Daily Room Service", description: "Our team ensures your room is clean and comfortable every day.", image: '/images/guesthouse-room.jpg' },
+  { icon: <WifiIcon />, title: "Free WiFi", description: "High-speed internet to keep you connected during your stay.", image: 'https://images.unsplash.com/photo-1554415707-6e8cfc93fe23?q=80&w=2070&auto=format&fit=crop' },
+  { icon: <LaundryIcon />, title: "Laundry Service", description: "Convenient laundry service is available upon request.", image: 'https://images.unsplash.com/photo-1582735689369-4fe89db7926c?q=80&w=1925&auto=format&fit=crop' },
+  { icon: <ExpertAdviceIcon />, title: "Local Expert Advice", description: "Get the best tips on what to see and do from our knowledgeable staff.", image: 'https://images.unsplash.com/photo-1521737852583-8c044203646d?q=80&w=2070&auto=format&fit=crop' },
+  { icon: <TransferIcon />, title: "Airport Transfers", description: "Seamless and hassle-free transfers from the airport to our guesthouse.", image: 'https://images.unsplash.com/photo-1562673396-5b6b33a4a4f4?q=80&w=1974&auto=format&fit=crop' },
+  { icon: <ExcursionIcon />, title: "Island Excursions", description: "We help you book unforgettable trips and tours around the island.", image: 'https://wildmaldives.com/media/images/c234b684-2a6c-48be-b166-5e5890885d56-1.jpg' },
+  { icon: <BreakfastIcon />, title: "Complimentary Breakfast", description: "Enjoy a delicious, free breakfast to start your day right.", image: '/images/breakfast.jpg' },
 ];
 
 export const TRANSPORT_STEPS: TransportStep[] = [
-    { icon: PlaneIcon, title: "Fly to Malé (MLE)", description: "Arrive at Velana International Airport, the main gateway to the Maldives." },
-    { icon: SpeedboatIcon, title: "Public Speedboat", description: "Take a scenic 1.5-hour speedboat ride directly to Thoddoo island. We'll book your tickets." },
-    { icon: CarIcon, title: "Guesthouse Pickup", description: "We'll greet you at the Thoddoo jetty and provide a free buggy ride to the retreat." },
+    { icon: <PlaneIcon />, title: "Fly to Malé (MLE)", description: "Arrive at Velana International Airport, the main gateway to the Maldives." },
+    { icon: <SpeedboatIcon />, title: "Public Speedboat", description: "Take a scenic 1.5-hour speedboat ride directly to Thoddoo island. We'll book your tickets." },
+    { icon: <CarIcon />, title: "Guesthouse Pickup", description: "We'll greet you at the Thoddoo jetty and provide a free buggy ride to the retreat." },
 ];

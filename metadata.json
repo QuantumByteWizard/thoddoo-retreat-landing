@@ -1,6 +1,6 @@
 {
-  "name": "Thoddoo Retreat Landing Page SEO Overhaul",
-  "description": "An SEO-optimized landing page for Thoddoo Retreat. Features keyword-rich content, a proper H1/H2 heading structure, descriptive image alt text, Open Graph tags, and a comprehensive JSON-LD 'Hotel' schema for enhanced search engine visibility and rich snippet potential.",
+  "name": "Thoddoo Retreat Grand Landing Page",
+  "description": "An SEO-optimized landing page for Thoddoo Retreat Grand. Features keyword-rich content, a proper H1/H2 heading structure, descriptive image alt text, Open Graph tags, and a comprehensive JSON-LD 'Hotel' schema for enhanced search engine visibility and rich snippet potential.",
   "requestFramePermissions": [],
   "prompt": "Do an in-depth analysis for improving the SEO. Change the writings and code to improve search engine visibility and follow best practices. Implement JSON-LD schema, optimize meta tags, rewrite content with keywords, and fix heading structure."
 }
