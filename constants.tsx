@@ -69,6 +69,45 @@ export const BikeIcon = (props: React.HTMLAttributes<HTMLImageElement>) => (
 );
 
 // Data
+export const TESTIMONIALS = [
+  {
+    name: 'johnboy3bw',
+    location: 'Macedon Ranges, Australia',
+    title: 'Best place to stay',
+    text: 'We stayed with Abdullah at Thoddoo Retreat for 2 weeks in 2016 and loved the place. Have just spent another 2 great weeks staying back at the Retreat. Great room with an outdoor shower/bathroom which was really cool... Great snorkeling trips - saw lots of turtles and mantas. Can\'t wait to go back again!!!',
+  },
+  {
+    name: 'Camilla M',
+    location: 'Sweden',
+    title: 'Thoddo Retreat - almost like home in paradise!',
+    text: 'We stayed at Thoddoo Retreat for four nights and had a magical experience with Adam and Abdullah who are the owners of the hotel. They looked after us and made sure that we had a great experience...also gave us the best experience of the island.',
+  },
+  {
+    name: 'J B',
+    location: 'Newfoundland and Labrador, Canada',
+    title: 'Great spot, best hosts!',
+    text: 'The owners know how to make sure their guests are taken care of! We arrived by ferry and the owners met us at the pier and brought us to the guest house. A perfect retreat away from the crowded resorts. Thoddoo may not be for everyone, it\'s a simple island filled with hidden beaches and hideaways.',
+  },
+  {
+    name: 'elizakhall',
+    location: 'Gold Coast, Australia',
+    title: 'Thoddoo retreat',
+    text: 'My best friend and I spent four days and five nights at Thoddoo retreat and we had a marvellous time. Tasty food, fabulous room, great location and friendly service. We went snorkeling various times and saw many turtles, explored the island at night... The retreat offers free breakfast with your stay, along w/...',
+  },
+  {
+    name: 'Karol J',
+    location: 'Poland',
+    title: 'Great time on Maldives!',
+    text: 'The place was fantastic. Beautiful garden, comfortable room and bed, amazing shower with open roof (You feel like showering in the jungle). The staff was really helpful and friendly. Whatever we need, Adam the owner, did everything to make us feel comfortable.',
+  },
+  {
+    name: 'Agathe P',
+    location: 'France',
+    title: 'Great hotel',
+    text: 'The hotel is very nice and comfortable and very well located on the island. The manager took really care of us and offers a lot of activities (snorkeling, banksand, swimming with manta rays...) He knows the sea very well so we felt very safe with him.',
+  },
+];
+
 export const AMENITIES: Amenity[] = [
   { icon: <AirIcon />, title: 'Modern AC Rooms', description: 'Relax in our cool, comfortable rooms after a day in the sun.', image: '/images/guesthouse-room.jpg' },
   { icon: <RoomServiceIcon />, title: 'Room Service', description: 'Enjoy delicious meals in the comfort of your room.', image: 'https://images.unsplash.com/photo-1560202589-946504a33924?q=80&w=2070&auto=format&fit=crop' },

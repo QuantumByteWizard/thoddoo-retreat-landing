@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
-import { REVIEWS, GALLERY_IMAGES, FacebookIcon, InstagramIcon, WhatsAppIcon, TRANSPORT_STEPS, AMENITIES } from './constants';
+import { REVIEWS, GALLERY_IMAGES, FacebookIcon, InstagramIcon, WhatsAppIcon, TRANSPORT_STEPS, AMENITIES, TESTIMONIALS } from './constants';
 import { Analytics } from "@vercel/analytics/react";
 import { HERO_IMAGES } from './unsplash-images';
 import { WhatsAppButton } from './src/components/WhatsAppButton';
@@ -430,19 +430,50 @@ const AmenitiesSection = () => {
   );
 };
 
-const MemoriesMadeSection: React.FC = () => (
-  <SectionWrapper className="bg-gray-800 text-white" id="reviews">
-    <div className="container mx-auto px-6">
-      <AnimatedElement>
-        <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 md:mb-6">Memories That Last a Lifetime</h2>
-        <p className="text-base md:text-lg opacity-90 max-w-2xl mx-auto mb-8 md:mb-12">See why so many of our guests become friends and return year after year. Your story is next.</p>
-        <div className="p-8 border-2 border-dashed border-white/50 rounded-lg">
-          <p className="italic">Animated testimonial wall coming soon...</p>
-        </div>
-      </AnimatedElement>
-    </div>
-  </SectionWrapper>
+const StarRating = ({ rating = 5 }: { rating?: number }) => (
+  <div className="flex items-center justify-center mb-4 text-teal-400">
+    {[...Array(5)].map((_, i) => (
+      <svg key={i} className={`w-5 h-5 fill-current ${i < rating ? 'text-teal-400' : 'text-gray-600'}`} viewBox="0 0 20 20">
+        <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
+      </svg>
+    ))}
+  </div>
 );
+
+const TestimonialCard = ({ review }: { review: typeof TESTIMONIALS[0] }) => (
+  <div className="bg-gray-800/50 backdrop-blur-sm border border-teal-400/20 rounded-xl p-6 w-80 md:w-96 mx-4 flex-shrink-0 transform hover:scale-105 transition-transform duration-300">
+    <StarRating />
+    <h3 className="text-xl font-bold text-teal-300 mb-2">{review.title}</h3>
+    <p className="text-gray-300 text-sm mb-4 italic">"{review.text}"</p>
+    <div className="text-right">
+      <p className="font-bold text-white">{review.name}</p>
+      <p className="text-xs text-gray-400">{review.location}</p>
+    </div>
+  </div>
+);
+
+const MemoriesMadeSection = () => {
+  const duplicatedTestimonials = [...TESTIMONIALS, ...TESTIMONIALS];
+
+  return (
+    <section id="reviews" className="w-full relative text-center py-16 md:py-24 lg:py-32 bg-gray-900 text-white overflow-hidden">
+      <div className="container mx-auto px-6 mb-12">
+        <AnimatedElement>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">Memories That Last a Lifetime</h2>
+          <p className="text-base md:text-lg opacity-90 max-w-3xl mx-auto">See why so many of our guests become friends and return year after year. Your story is next.</p>
+        </AnimatedElement>
+      </div>
+      <div className="relative w-full flex overflow-hidden group">
+        <div className="flex animate-scroll group-hover:pause">
+          {duplicatedTestimonials.map((review, index) => (
+            <TestimonialCard key={index} review={review} />
+          ))}
+        </div>
+        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-gray-900 via-transparent to-gray-900 pointer-events-none"></div>
+      </div>
+    </section>
+  );
+};
 
 const journeyContainerVariants = {
   hidden: { opacity: 1 },
