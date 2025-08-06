@@ -1,5 +1,5 @@
-import React, { useRef, useState } from 'react';
-import { motion, useScroll, useTransform, useInView } from 'framer-motion';
+import React, { useRef, useState, useEffect } from 'react';
+import { motion, useScroll, useTransform, useInView, AnimatePresence } from 'framer-motion';
 import { REVIEWS, GALLERY_IMAGES, FacebookIcon, InstagramIcon, WhatsAppIcon, TRANSPORT_STEPS, AMENITIES, TESTIMONIALS } from './constants';
 import { Analytics } from "@vercel/analytics/react";
 import { HERO_IMAGES } from './unsplash-images';
@@ -452,8 +452,38 @@ const TestimonialCard = ({ review }: { review: typeof TESTIMONIALS[0] }) => (
   </div>
 );
 
+const slideVariants = {
+  enter: (direction: number) => ({
+    x: direction > 0 ? '-100%' : '100%',
+    opacity: 0,
+  }),
+  center: {
+    zIndex: 1,
+    x: 0,
+    opacity: 1,
+  },
+  exit: (direction: number) => ({
+    zIndex: 0,
+    x: direction < 0 ? '-100%' : '100%',
+    opacity: 0,
+  }),
+};
+
 const MemoriesMadeSection = () => {
-  const duplicatedTestimonials = [...TESTIMONIALS, ...TESTIMONIALS];
+  const [[page, direction], setPage] = useState([0, 0]);
+
+  const reviewIndex = (page % TESTIMONIALS.length + TESTIMONIALS.length) % TESTIMONIALS.length;
+
+  const paginate = (newDirection: number) => {
+    setPage([page + newDirection, newDirection]);
+  };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      paginate(1); // Auto-advance to the next review
+    }, 4000);
+    return () => clearInterval(interval);
+  }, [page]);
 
   return (
     <section id="reviews" className="w-full relative text-center py-16 md:py-24 lg:py-32 bg-gray-900 text-white overflow-hidden">
@@ -463,13 +493,31 @@ const MemoriesMadeSection = () => {
           <p className="text-base md:text-lg opacity-90 max-w-3xl mx-auto">See why so many of our guests become friends and return year after year. Your story is next.</p>
         </AnimatedElement>
       </div>
-      <div className="relative w-full flex overflow-hidden group">
-        <div className="flex animate-scroll group-hover:pause">
-          {duplicatedTestimonials.map((review, index) => (
-            <TestimonialCard key={index} review={review} />
-          ))}
+
+      <div className="relative h-72 flex items-center justify-center">
+        <AnimatePresence initial={false} custom={direction} mode="wait">
+          <motion.div
+            key={page}
+            custom={direction}
+            variants={slideVariants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={{ x: { type: 'spring', stiffness: 300, damping: 30 }, opacity: { duration: 0.3 } }}
+            className="absolute"
+          >
+            <TestimonialCard review={TESTIMONIALS[reviewIndex]} />
+          </motion.div>
+        </AnimatePresence>
+
+        <div className="absolute top-1/2 -translate-y-1/2 w-full flex justify-between px-4 md:px-10 z-10">
+          <button onClick={() => paginate(-1)} className="bg-white/10 hover:bg-white/20 text-white rounded-full w-10 h-10 flex items-center justify-center transition-colors">
+            &#x2190;
+          </button>
+          <button onClick={() => paginate(1)} className="bg-white/10 hover:bg-white/20 text-white rounded-full w-10 h-10 flex items-center justify-center transition-colors">
+            &#x2192;
+          </button>
         </div>
-        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-gray-900 via-transparent to-gray-900 pointer-events-none"></div>
       </div>
     </section>
   );

@@ -13,14 +13,9 @@ module.exports = {
           '50%': { backgroundPosition: '100% 50%' },
           '100%': { backgroundPosition: '0% 50%' },
         },
-        scroll: {
-          '0%': { transform: 'translateX(0)' },
-          '100%': { transform: 'translateX(-50%)' },
-        },
       },
       animation: {
         gradient: 'gradient 6s ease infinite',
-        scroll: 'scroll 60s linear infinite',
       },
       utilities: {
         '.pause': {
