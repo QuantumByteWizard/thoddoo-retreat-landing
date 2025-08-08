@@ -10,22 +10,22 @@ import type { Review } from './types';
 const THODDOO_ACTIVITIES = [
   {
     title: "Manta + Nurse Shark Snorkeling",
-    image: "/images/Manta+shark.jpeg",
+    image: "/images/Manta+shark.webp",
     description: "Swim alongside majestic manta rays and gentle nurse sharks in crystal-clear waters. An unforgettable encounter with ocean giants!"
   },
   {
     title: "Manta Snorkeling",
-    image: "/images/manta.jpeg",
+    image: "/images/manta.webp",
     description: "Experience the grace of manta rays gliding through pristine reefs. These gentle giants will leave you breathless with wonder."
   },
   {
     title: "Dolphin Cruise",
-    image: "/images/dolphin.jpeg",
+    image: "/images/dolphin.webp",
     description: "Watch playful dolphins dance in the sunset as you cruise the turquoise waters. Pure magic on the Indian Ocean."
   },
   {
     title: "Dinner at Beach",
-    image: "/images/beach_dinner.jpeg",
+    image: "/images/beach_dinner.webp",
     description: "Dine under the stars with your toes in the sand. Fresh seafood, ocean breeze, and unforgettable island romance."
   }
 ];
@@ -227,11 +227,35 @@ const ProblemSolutionSection: React.FC = () => {
         <AnimatedElement className="mb-16">
           <div className="inline-block bg-red-500/10 text-red-400 px-6 py-2 rounded-full text-sm font-semibold border border-red-500/30 mb-8">⚠️ The Island Search Struggle</div>
           <motion.h1 
-            className="text-4xl md:text-6xl font-black leading-tight mb-6 bg-gradient-to-r from-red-500 via-orange-400 to-yellow-500 bg-clip-text text-transparent animate-gradient"
+            className="text-4xl md:text-6xl font-black leading-tight mb-6"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease: "easeOut" }}
             viewport={{ once: true, amount: 0.3 }}
+            animate={{
+              opacity: 1,
+              y: 0,
+              backgroundImage: [
+                'linear-gradient(45deg, #ef4444, #f97316, #eab308)',
+                'linear-gradient(45deg, #f97316, #eab308, #ef4444)',
+                'linear-gradient(45deg, #eab308, #ef4444, #f97316)',
+                'linear-gradient(45deg, #ef4444, #f97316, #eab308)'
+              ]
+            }}
+            transition={{
+              opacity: { duration: 0.5, ease: "easeOut" },
+              y: { duration: 0.5, ease: "easeOut" },
+              backgroundImage: {
+                duration: 3,
+                repeat: Infinity,
+                ease: "linear"
+              }
+            }}
+            style={{
+              backgroundSize: '200% 200%',
+              backgroundClip: 'text',
+              WebkitBackgroundClip: 'text',
+              color: 'transparent'
+            }}
           >Overwhelmed by Endless Maldives Island Options?</motion.h1>
           <p className="text-slate-300 mb-12 max-w-3xl mx-auto">Scrolling through hundreds of <strong>Maldives islands</strong> and <strong>guesthouses</strong>, comparing prices, and still having no idea which <strong>island</strong> gives you the perfect balance of budget, beauty, and authentic experiences?</p>
           <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">

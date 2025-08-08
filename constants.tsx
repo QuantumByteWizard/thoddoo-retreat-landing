@@ -109,11 +109,11 @@ export const TESTIMONIALS = [
 ];
 
 export const AMENITIES: Amenity[] = [
-  { icon: <AirIcon />, title: 'Modern AC Rooms', description: 'Relax in our cool, comfortable rooms after a day in the sun.', image: '/images/guesthouse-room.jpg' },
+  { icon: <AirIcon />, title: 'Modern AC Rooms', description: 'Relax in our cool, comfortable rooms after a day in the sun.', image: '/images/guesthouse-room.webp' },
   { icon: <RoomServiceIcon />, title: 'Room Service', description: 'Enjoy delicious meals in the comfort of your room.', image: 'https://images.unsplash.com/photo-1560202589-946504a33924?q=80&w=2070&auto=format&fit=crop' },
   { icon: <WifiIcon />, title: 'Free High-Speed Wi-Fi', description: 'Stay connected with fast and reliable internet throughout the guesthouse.', image: 'https://images.unsplash.com/photo-1554415707-6e8cfc93fe23?q=80&w=2070&auto=format&fit=crop' },
   { icon: <BikeIcon />, title: 'Free Bicycles', description: 'Explore the island at your own pace with our complimentary bikes.', image: 'https://images.unsplash.com/photo-1576487248795-e6318146d334?q=80&w=2070&auto=format&fit=crop' },
-  { icon: <BreakfastIcon />, title: 'Maldivian Breakfast', description: 'Start your day with a delicious, authentic local breakfast.', image: '/images/breakfast.jpg' },
+  { icon: <BreakfastIcon />, title: 'Maldivian Breakfast', description: 'Start your day with a delicious, authentic local breakfast.', image: '/images/breakfast.webp' },
 
   { icon: <ExcursionIcon />, title: 'Excursion Planning', description: 'Let us help you plan unforgettable adventures and experiences.', image: 'https://wildmaldives.com/media/images/c234b684-2a6c-48be-b166-5e5890885d56-1.jpg' },
   { icon: <RoomServiceIcon />, title: 'Room Service', description: 'Enjoy meals and refreshments in the comfort of your room.', image: 'https://images.unsplash.com/photo-1568084680786-84e182d19a2d?q=80&w=1962&auto=format&fit=crop' },
@@ -175,22 +175,22 @@ export const REVIEWS: Review[] = [
 ];
 
 export const GALLERY_IMAGES: GalleryImage[] = [
-    { src: "/images/guesthouse-exterior.jpg", alt: "Exterior view of Thoddoo Retreat Grand, a modern guesthouse in Maldives" },
-    { src: "/images/guesthouse-room.jpg", alt: "Deluxe double room at Thoddoo Retreat Grand guesthouse with modern decor" },
+    { src: "/images/guesthouse-exterior.webp", alt: "Exterior view of Thoddoo Retreat Grand, a modern guesthouse in Maldives" },
+    { src: "/images/guesthouse-room.webp", alt: "Deluxe double room at Thoddoo Retreat Grand guesthouse with modern decor" },
     { src: "https://wildmaldives.com/media/images/2208f2e4-e7ea-43d9-a548-6a581404e8d3-1.jpg", alt: "Guest relaxing on a hammock on the white sand of Thoddoo Bikini Beach" },
-    { src: "/images/breakfast.jpg", alt: "Healthy Maldivian breakfast served at Thoddoo Retreat Grand" },
-    { src: "/images/breakfast.jpg", alt: "Delicious Maldivian breakfast served in the garden" },
+    { src: "/images/breakfast.webp", alt: "Healthy Maldivian breakfast served at Thoddoo Retreat Grand" },
+    { src: "/images/breakfast.webp", alt: "Delicious Maldivian breakfast served in the garden" },
     { src: "https://wildmaldives.com/media/images/2b761dd7-c373-4ac0-a629-873b88b7f87e.jpg", alt: "Majestic manta ray swimming in the waters of the Maldivian atoll" },
 ];
 
 export const GUEST_AMENITIES: Amenity[] = [
-  { icon: <RoomServiceIcon />, title: "Daily Room Service", description: "Our team ensures your room is clean and comfortable every day.", image: '/images/guesthouse-room.jpg' },
+  { icon: <RoomServiceIcon />, title: "Daily Room Service", description: "Our team ensures your room is clean and comfortable every day.", image: '/images/guesthouse-room.webp' },
   { icon: <WifiIcon />, title: "Free WiFi", description: "High-speed internet to keep you connected during your stay.", image: 'https://images.unsplash.com/photo-1554415707-6e8cfc93fe23?q=80&w=2070&auto=format&fit=crop' },
   { icon: <LaundryIcon />, title: "Laundry Service", description: "Convenient laundry service is available upon request.", image: 'https://images.unsplash.com/photo-1582735689369-4fe89db7926c?q=80&w=1925&auto=format&fit=crop' },
   { icon: <ExpertAdviceIcon />, title: "Local Expert Advice", description: "Get the best tips on what to see and do from our knowledgeable staff.", image: 'https://images.unsplash.com/photo-1521737852583-8c044203646d?q=80&w=2070&auto=format&fit=crop' },
   { icon: <TransferIcon />, title: "Airport Transfers", description: "Seamless and hassle-free transfers from the airport to our guesthouse.", image: 'https://images.unsplash.com/photo-1562673396-5b6b33a4a4f4?q=80&w=1974&auto=format&fit=crop' },
   { icon: <ExcursionIcon />, title: "Island Excursions", description: "We help you book unforgettable trips and tours around the island.", image: 'https://wildmaldives.com/media/images/c234b684-2a6c-48be-b166-5e5890885d56-1.jpg' },
-  { icon: <BreakfastIcon />, title: "Complimentary Breakfast", description: "Enjoy a delicious, free breakfast to start your day right.", image: '/images/breakfast.jpg' },
+  { icon: <BreakfastIcon />, title: "Complimentary Breakfast", description: "Enjoy a delicious, free breakfast to start your day right.", image: '/images/breakfast.webp' },
 ];
 
 export const TRANSPORT_STEPS: TransportStep[] = [
