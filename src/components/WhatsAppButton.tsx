@@ -10,8 +10,11 @@ export const WhatsAppButton: React.FC = () => {
       href={WHATSAPP_URL}
       target="_blank"
       rel="noopener noreferrer"
-      className="fixed bottom-6 right-6 text-white rounded-full p-4 shadow-lg transition-transform duration-300 hover:scale-110 z-50 flex items-center justify-center"
+      className="fixed bottom-6 right-6 rounded-full w-14 h-14 shadow-lg transition-all duration-300 hover:scale-105 z-50 flex items-center justify-center"
       aria-label="Chat on WhatsApp"
+      style={{
+        boxShadow: '0 4px 20px rgba(0, 0, 0, 0.2)'
+      }}
     >
       <WhatsAppIcon className="w-8 h-8" />
     </a>
