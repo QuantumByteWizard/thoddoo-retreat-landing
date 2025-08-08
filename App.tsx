@@ -282,15 +282,18 @@ const FirstImpressionsSection: React.FC = () => {
 const GallerySection: React.FC = () => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   
-  // Gallery images from /public/images/Gallary (using web-compatible formats)
+  // Gallery images using optimized webp format for better performance
   const galleryImages = [
-    { src: "/images/Gallary/IMG_1182.JPG", alt: "Beautiful island scenery at Thoddoo", height: "h-64" },
-    { src: "/images/Gallary/IMG_3061.JPG", alt: "Paradise beach views", height: "h-56" },
-    { src: "/images/Gallary/IMG_7305.JPG", alt: "Crystal clear waters and pristine beaches", height: "h-68" },
-    { src: "/images/Gallary/IMG_9149.JPG", alt: "Tropical island paradise", height: "h-60" },
-    { src: "/images/Gallary/IMG_9268.JPG", alt: "Breathtaking Maldivian scenery", height: "h-52" },
-    { src: "/images/guesthouse-room.jpg", alt: "Deluxe room interior", height: "h-48" },
-    { src: "/images/breakfast.jpg", alt: "Fresh Maldivian breakfast", height: "h-56" }
+    { src: "/images/Gallary/IMG_1174.webp", alt: "Beautiful island scenery at Thoddoo", height: "h-64" },
+    { src: "/images/Gallary/IMG_1176.webp", alt: "Stunning tropical landscape", height: "h-72" },
+    { src: "/images/Gallary/IMG_1182.webp", alt: "Paradise beach views", height: "h-56" },
+    { src: "/images/Gallary/IMG_1189.webp", alt: "Crystal clear waters and pristine beaches", height: "h-68" },
+    { src: "/images/Gallary/IMG_2890.webp", alt: "Tropical island paradise", height: "h-60" },
+    { src: "/images/Gallary/IMG_3061.webp", alt: "Breathtaking Maldivian scenery", height: "h-52" },
+    { src: "/images/Gallary/IMG_7305.webp", alt: "Island life at its finest", height: "h-64" },
+    { src: "/images/Gallary/IMG_9147.webp", alt: "Serene island moments", height: "h-58" },
+    { src: "/images/Gallary/IMG_9149.webp", alt: "Authentic Thoddoo experiences", height: "h-66" },
+    { src: "/images/Gallary/IMG_9268.webp", alt: "Unforgettable island memories", height: "h-54" }
   ];
 
   return (
