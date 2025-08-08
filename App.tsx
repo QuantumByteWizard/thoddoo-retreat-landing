@@ -185,44 +185,145 @@ const ProblemSolutionSection: React.FC = () => {
   const InteractiveFeatureCards: React.FC = () => {
     const [hoveredCard, setHoveredCard] = useState<number | null>(null);
     const features = [
-      { emoji: "🏆", title: "Couples' Paradise Island", preview: "#1 Romantic Destination", details: "Consistently rated #1 romantic island by travel bloggers. Perfect sunsets, private beaches, and intimate dining experiences." },
-      { emoji: "🏖️", title: "World-Class Beach Access", preview: "Crystal Clear Waters", details: "Top-rated beach in Maldives with pristine white sand, crystal-clear turquoise waters, and excellent snorkeling spots." },
-      { emoji: "🍽️", title: "Best Breakfast Experience", preview: "Fresh Tropical Fruits", details: "Complimentary breakfast featuring fresh tropical fruits, local delicacies, and international favorites served daily." },
-      { emoji: "🚤", title: "Adventure Hub Location", preview: "Easy Boat Access", details: "Strategic location with easy boat access to all excursions, diving spots, fishing trips, and island hopping adventures." },
-      { emoji: "👥", title: "Legendary Hospitality", preview: "Warmest Community", details: "Experience the warmest, most welcoming island community in Maldives with genuine local hospitality and cultural immersion." },
-      { emoji: "💰", title: "True Budget Value", preview: "Premium at Budget Prices", details: "Enjoy premium resort-style experience at budget hotel prices. Exceptional value without compromising on quality or comfort." }
+      { emoji: "🏆", title: "Couples' Paradise", preview: "#1 Romantic Island", details: "Consistently rated #1 romantic destination by travel bloggers.", color: "amber" },
+      { emoji: "🏖️", title: "World-Class Beach", preview: "Crystal Clear Waters", details: "Pristine white sand and turquoise waters with excellent snorkeling.", color: "cyan" },
+      { emoji: "🍽️", title: "Best Breakfast", preview: "Fresh Tropical Fruits", details: "Complimentary breakfast with fresh local fruits and delicacies.", color: "orange" },
+      { emoji: "🚤", title: "Adventure Hub", preview: "Easy Boat Access", details: "Strategic location with easy access to all excursions and diving.", color: "blue" },
+      { emoji: "👥", title: "Warm Hospitality", preview: "Welcoming Community", details: "Experience genuine Maldivian hospitality and cultural immersion.", color: "pink" },
+      { emoji: "💰", title: "Great Value", preview: "Budget-Friendly", details: "Premium resort experience at budget guesthouse prices.", color: "emerald" }
     ];
+
+    const getColorClasses = (color: string, isHovered: boolean) => {
+      const colors = {
+        amber: {
+          bg: isHovered ? 'bg-amber-500/5' : '',
+          border: isHovered ? 'border-amber-500/20' : 'border-slate-700/50',
+          glow: isHovered ? 'shadow-amber-500/10' : '',
+          text: isHovered ? 'text-amber-400' : 'text-emerald-400'
+        },
+        cyan: {
+          bg: isHovered ? 'bg-cyan-500/5' : '',
+          border: isHovered ? 'border-cyan-500/20' : 'border-slate-700/50',
+          glow: isHovered ? 'shadow-cyan-500/10' : '',
+          text: isHovered ? 'text-cyan-400' : 'text-emerald-400'
+        },
+        orange: {
+          bg: isHovered ? 'bg-orange-500/5' : '',
+          border: isHovered ? 'border-orange-500/20' : 'border-slate-700/50',
+          glow: isHovered ? 'shadow-orange-500/10' : '',
+          text: isHovered ? 'text-orange-400' : 'text-emerald-400'
+        },
+        blue: {
+          bg: isHovered ? 'bg-blue-500/5' : '',
+          border: isHovered ? 'border-blue-500/20' : 'border-slate-700/50',
+          glow: isHovered ? 'shadow-blue-500/10' : '',
+          text: isHovered ? 'text-blue-400' : 'text-emerald-400'
+        },
+        pink: {
+          bg: isHovered ? 'bg-pink-500/5' : '',
+          border: isHovered ? 'border-pink-500/20' : 'border-slate-700/50',
+          glow: isHovered ? 'shadow-pink-500/10' : '',
+          text: isHovered ? 'text-pink-400' : 'text-emerald-400'
+        },
+        emerald: {
+          bg: isHovered ? 'bg-emerald-500/5' : '',
+          border: isHovered ? 'border-emerald-500/20' : 'border-slate-700/50',
+          glow: isHovered ? 'shadow-emerald-500/10' : '',
+          text: isHovered ? 'text-emerald-400' : 'text-emerald-400'
+        }
+      };
+      return colors[color as keyof typeof colors] || colors.emerald;
+    };
 
     return (
       <div className="text-center">
-        <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">Why Choose Thoddoo Island?</h3>
-        <p className="text-slate-300 mb-8 max-w-2xl mx-auto">Hover over each feature to discover what makes us special</p>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {features.map((feature, index) => (
-            <div
-              key={index}
-              className="relative bg-slate-700 rounded-xl p-6 border border-slate-600 cursor-pointer transition-all duration-300 hover:bg-slate-600 hover:border-emerald-400 hover:scale-105 group"
-              onMouseEnter={() => setHoveredCard(index)}
-              onMouseLeave={() => setHoveredCard(null)}
-            >
-              <div className="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300">{feature.emoji}</div>
-              <h4 className="font-bold text-emerald-400 text-lg mb-3 group-hover:text-emerald-300">{feature.title}</h4>
-              <div className="text-slate-300 text-sm leading-relaxed h-16 flex items-center justify-center">
-                {hoveredCard === index ? (
-                  <motion.p initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }}>{feature.details}</motion.p>
-                ) : (
-                  <p className="text-slate-400 font-medium">{feature.preview}</p>
-                )}
-              </div>
-            </div>
-          ))}
+        <h3 className="text-2xl md:text-3xl font-bold text-white mb-3">Why Choose Thoddoo Island?</h3>
+        <p className="text-slate-400 mb-6 text-sm">Discover what makes us the perfect choice for your Maldives getaway</p>
+        
+        {/* Compact Grid Layout */}
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 max-w-4xl mx-auto">
+          {features.map((feature, index) => {
+            const isHovered = hoveredCard === index;
+            const colorClasses = getColorClasses(feature.color, isHovered);
+            
+            return (
+              <motion.div
+                key={index}
+                className={`relative bg-slate-900/80 rounded-lg p-4 border cursor-pointer group overflow-hidden transition-all duration-300 ${colorClasses.bg} ${colorClasses.border}`}
+                onMouseEnter={() => setHoveredCard(index)}
+                onMouseLeave={() => setHoveredCard(null)}
+                whileHover={{ scale: 1.015, y: -1 }}
+                animate={{
+                  boxShadow: isHovered ? `0 4px 20px rgba(0,0,0,0.2)` : '0 2px 8px rgba(0,0,0,0.1)'
+                }}
+                transition={{ duration: 0.15, ease: "easeOut" }}
+              >
+                {/* Content */}
+                <div className="text-center">
+                  <motion.div 
+                    className="text-2xl mb-2"
+                    animate={{ scale: isHovered ? 1.08 : 1 }}
+                    transition={{ duration: 0.15 }}
+                  >
+                    {feature.emoji}
+                  </motion.div>
+                  <h4 className={`font-bold text-sm mb-1 transition-colors duration-200 ${colorClasses.text}`}>
+                    {feature.title}
+                  </h4>
+                  <div className="min-h-[2.5rem] flex items-center justify-center">
+                    <AnimatePresence mode="wait">
+                      {isHovered ? (
+                        <motion.p
+                          key="details"
+                          initial={{ opacity: 0, y: 3 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -3 }}
+                          transition={{ duration: 0.15 }}
+                          className="text-slate-300 text-xs leading-tight"
+                        >
+                          {feature.details}
+                        </motion.p>
+                      ) : (
+                        <motion.p
+                          key="preview"
+                          initial={{ opacity: 0, y: 3 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -3 }}
+                          transition={{ duration: 0.15 }}
+                          className="text-slate-500 text-xs font-medium"
+                        >
+                          {feature.preview}
+                        </motion.p>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                </div>
+
+                {/* Optimized glow effect */}
+                <motion.div
+                  className="absolute inset-0 rounded-lg pointer-events-none"
+                  animate={{
+                    opacity: isHovered ? 0.05 : 0,
+                    background: isHovered ? `radial-gradient(circle at center, ${
+                      feature.color === 'amber' ? '#f59e0b' : 
+                      feature.color === 'cyan' ? '#06b6d4' :
+                      feature.color === 'orange' ? '#f97316' :
+                      feature.color === 'blue' ? '#3b82f6' :
+                      feature.color === 'pink' ? '#ec4899' : '#10b981'
+                    }, transparent 60%)` : 'transparent'
+                  }}
+                  transition={{ duration: 0.15 }}
+                />
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     );
   };
 
   return (
-    <section className="min-h-screen bg-slate-900 text-white py-12 md:py-20">
+    <section className="min-h-screen bg-gray-950 text-white py-12 md:py-20">
       <div className="container mx-auto px-4 md:px-6 text-center">
         <AnimatedElement className="mb-16">
           <div className="inline-block bg-red-500/10 text-red-400 px-6 py-2 rounded-full text-sm font-semibold border border-red-500/30 mb-8">⚠️ The Island Search Struggle</div>
@@ -278,7 +379,7 @@ const ProblemSolutionSection: React.FC = () => {
           <h2 className="text-3xl md:text-5xl font-black leading-tight mb-6 bg-gradient-to-r from-emerald-400 via-cyan-400 to-blue-500 bg-clip-text text-transparent">Meet <span className="bg-gradient-to-r from-orange-400 to-yellow-500 bg-clip-text text-transparent">Thoddoo Retreat Grand</span> - The Smart Traveler's Choice</h2>
           <p className="text-lg text-slate-300 font-medium max-w-3xl mx-auto">Stop the endless research. <strong>Thoddoo</strong> is the <strong>island</strong> that experienced travelers choose most - and <strong>Thoddoo Retreat Grand</strong> is the top-rated <strong>budget guesthouse</strong> that delivers everything you're looking for.</p>
         </AnimatedElement>
-        <AnimatedElement className="bg-slate-800 rounded-2xl p-8 md:p-12 border border-slate-700 mb-16">
+        <AnimatedElement className="bg-gray-900/50 rounded-2xl p-8 md:p-12 border border-gray-800 mb-16">
           <InteractiveFeatureCards />
         </AnimatedElement>
       </div>
@@ -305,6 +406,8 @@ const FirstImpressionsSection: React.FC = () => {
 
 const GallerySection: React.FC = () => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [showAll, setShowAll] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   
   // Gallery images using optimized webp format for better performance
   const galleryImages = [
@@ -320,6 +423,17 @@ const GallerySection: React.FC = () => {
     { src: "/images/Gallary/IMG_9268.webp", alt: "Unforgettable island memories", height: "h-54" }
   ];
 
+  // Check if mobile on mount and resize
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // Show only first 4 on mobile, all on desktop or when showAll is true
+  const imagesToShow = showAll || !isMobile ? galleryImages : galleryImages.slice(0, 4);
+
   return (
     <SectionWrapper className="bg-white">
       <div className="container mx-auto px-4 md:px-6">
@@ -330,7 +444,7 @@ const GallerySection: React.FC = () => {
         
         {/* Masonry Grid */}
         <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4 space-y-4">
-          {galleryImages.map((image, index) => (
+          {imagesToShow.map((image, index) => (
             <AnimatedElement key={index} className="break-inside-avoid">
               <div 
                 className={`relative ${image.height} cursor-pointer group overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02]`}
@@ -352,6 +466,62 @@ const GallerySection: React.FC = () => {
             </AnimatedElement>
           ))}
         </div>
+
+        {/* See More Button - Only show on mobile when not showing all */}
+        {!showAll && isMobile && (
+          <div className="flex justify-center mt-8">
+            <motion.button
+              onClick={() => setShowAll(true)}
+              className="relative px-8 py-3 bg-transparent border-2 border-teal-500 text-teal-600 font-semibold rounded-full overflow-hidden group transition-all duration-300"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              {/* Glowing animation background */}
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-r from-teal-500/20 via-teal-400/30 to-teal-500/20 rounded-full"
+                animate={{
+                  backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: "linear"
+                }}
+                style={{
+                  backgroundSize: '200% 100%'
+                }}
+              />
+              
+              {/* Animated border glow */}
+              <motion.div
+                className="absolute inset-0 rounded-full"
+                animate={{
+                  boxShadow: [
+                    '0 0 0px rgba(20, 184, 166, 0.5)',
+                    '0 0 20px rgba(20, 184, 166, 0.8)',
+                    '0 0 0px rgba(20, 184, 166, 0.5)'
+                  ]
+                }}
+                transition={{
+                  duration: 1.5,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+              />
+              
+              {/* Button text */}
+              <span className="relative z-10 flex items-center space-x-2">
+                <span>See More Photos</span>
+                <motion.span
+                  animate={{ rotate: [0, 180, 360] }}
+                  transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                >
+                  ✨
+                </motion.span>
+              </span>
+            </motion.button>
+          </div>
+        )}
 
         {/* Lightbox Modal */}
         <AnimatePresence>
@@ -394,28 +564,60 @@ const GallerySection: React.FC = () => {
 const RoomSanctuarySection: React.FC = () => {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
-  const y1 = useTransform(scrollYProgress, [0, 1], ['-10%', '10%']);
+  
+  // More dramatic parallax speeds for better visibility
+  // Mobile gets slightly reduced ranges for better performance and UX
+  const yImages = useTransform(scrollYProgress, [0, 1], ['-30%', '30%']); // Images move much faster
+  const yReview = useTransform(scrollYProgress, [0, 1], ['-8%', '8%']);   // Review moves slower (more delayed)
+  const yText = useTransform(scrollYProgress, [0, 1], ['0%', '0%']);       // Text stays static
+  
   const roomReview = REVIEWS.find(r => r.section === 'room');
 
   return (
     <SectionWrapper ref={ref} className="bg-white">
       <div className="container mx-auto px-4 md:px-6 text-center">
-        <AnimatedElement>
-          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-teal-700 mb-4">Your Room, Your Sanctuary</h2>
-          <p className="text-base md:text-lg text-gray-600 max-w-2xl mx-auto mb-8 md:mb-12">Your private oasis awaits—modern, spotless, and full of light.</p>
-        </AnimatedElement>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-4 items-center">
-          <motion.div className="md:col-span-1" style={{ y: y1 }}>
-            <img loading="lazy" alt="Modern guesthouse room" className="rounded-lg shadow-xl w-full max-w-xs mx-auto h-48 sm:h-56 md:h-64 object-cover" src={GALLERY_IMAGES[1].src} />
+        <motion.div style={{ y: yText }}>
+          <AnimatedElement>
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-teal-700 mb-4">Your Room, Your Sanctuary</h2>
+            <p className="text-base md:text-lg text-gray-600 max-w-2xl mx-auto mb-8 md:mb-12">Your private oasis awaits—modern, spotless, and full of light.</p>
+          </AnimatedElement>
+        </motion.div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-4 items-center">
+          {/* Left Image - Fast parallax */}
+          <motion.div 
+            className="md:col-span-1" 
+            style={{ y: yImages }}
+            // Add will-change for better mobile performance
+            transition={{ type: "tween", ease: "linear" }}
+          >
+            <img 
+              loading="lazy" 
+              alt="Modern guesthouse room" 
+              className="rounded-lg shadow-xl w-full max-w-xs mx-auto h-48 sm:h-56 md:h-64 object-cover will-change-transform" 
+              src={GALLERY_IMAGES[1].src} 
+            />
           </motion.div>
-          <div className="md:col-span-1 flex justify-center">
+          
+          {/* Center Review - Slow parallax (delayed) */}
+          <motion.div 
+            className="md:col-span-1 flex justify-center" 
+            style={{ y: yReview }}
+            transition={{ type: "tween", ease: "linear" }}
+          >
             {roomReview && <ReviewCard review={roomReview} />}
-          </div>
-          <motion.div className="md:col-span-1" style={{ y: y1 }}>
+          </motion.div>
+          
+          {/* Right Image - Fast parallax */}
+          <motion.div 
+            className="md:col-span-1" 
+            style={{ y: yImages }}
+            transition={{ type: "tween", ease: "linear" }}
+          >
             <img
               loading="lazy"
               alt="Guesthouse exterior"
-              className="rounded-lg shadow-xl w-full max-w-xs mx-auto h-48 sm:h-56 md:h-64 object-cover"
+              className="rounded-lg shadow-xl w-full max-w-xs mx-auto h-48 sm:h-56 md:h-64 object-cover will-change-transform"
               src={GALLERY_IMAGES[0].src}
             />
           </motion.div>
@@ -457,8 +659,8 @@ const DiscoverThoddooSection: React.FC = () => {
     <SectionWrapper className="bg-teal-50">
       <div className="container mx-auto px-4 md:px-6 text-center">
         <AnimatedElement>
-          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-teal-700 mb-6">Unforgettable Island Adventures</h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-12">Our guests love exploring Thoddoo. Here are some of their favorite activities.</p>
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-teal-700 mb-6">Thoddoo Excursions & Adventures</h2>
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-12">Discover the best excursions in Thoddoo. From manta ray snorkeling to sandbank trips, we offer unforgettable island adventures.</p>
         </AnimatedElement>
         
         {/* Activity Flip Cards */}
