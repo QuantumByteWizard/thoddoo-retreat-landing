@@ -279,6 +279,91 @@ const FirstImpressionsSection: React.FC = () => {
   );
 };
 
+const GallerySection: React.FC = () => {
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  
+  // Gallery images from /public/images/Gallary (using web-compatible formats)
+  const galleryImages = [
+    { src: "/images/Gallary/IMG_1182.JPG", alt: "Beautiful island scenery at Thoddoo", height: "h-64" },
+    { src: "/images/Gallary/IMG_3061.JPG", alt: "Paradise beach views", height: "h-56" },
+    { src: "/images/Gallary/IMG_7305.JPG", alt: "Crystal clear waters and pristine beaches", height: "h-68" },
+    { src: "/images/Gallary/IMG_9149.JPG", alt: "Tropical island paradise", height: "h-60" },
+    { src: "/images/Gallary/IMG_9268.JPG", alt: "Breathtaking Maldivian scenery", height: "h-52" },
+    { src: "/images/guesthouse-room.jpg", alt: "Deluxe room interior", height: "h-48" },
+    { src: "/images/breakfast.jpg", alt: "Fresh Maldivian breakfast", height: "h-56" }
+  ];
+
+  return (
+    <SectionWrapper className="bg-white">
+      <div className="container mx-auto px-4 md:px-6">
+        <AnimatedElement className="text-center mb-8 md:mb-12">
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-teal-700 mb-4 md:mb-6">Discover Thoddoo Through Our Lens</h2>
+          <p className="text-base md:text-lg text-gray-600 max-w-2xl mx-auto">From pristine beaches to underwater adventures, get a glimpse of what awaits you at our island paradise.</p>
+        </AnimatedElement>
+        
+        {/* Masonry Grid */}
+        <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4 space-y-4">
+          {galleryImages.map((image, index) => (
+            <AnimatedElement key={index} className="break-inside-avoid">
+              <div 
+                className={`relative ${image.height} cursor-pointer group overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02]`}
+                onClick={() => setSelectedImage(image.src)}
+              >
+                <img
+                  src={image.src}
+                  alt={image.alt}
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-300" />
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 bg-gradient-to-t from-black/50 via-transparent to-transparent transition-opacity duration-300" />
+                <div className="absolute bottom-2 left-2 right-2 text-white font-medium text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-y-2 group-hover:translate-y-0">
+                  {image.alt}
+                </div>
+              </div>
+            </AnimatedElement>
+          ))}
+        </div>
+
+        {/* Lightbox Modal */}
+        <AnimatePresence>
+          {selectedImage && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4"
+              onClick={() => setSelectedImage(null)}
+            >
+              <motion.div
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.8, opacity: 0 }}
+                className="relative w-full h-full flex items-center justify-center"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <img
+                  src={selectedImage}
+                  alt="Gallery image"
+                  className="max-w-full max-h-full object-contain rounded-lg"
+                  style={{ maxWidth: '90vw', maxHeight: '90vh' }}
+                />
+                <button
+                  onClick={() => setSelectedImage(null)}
+                  className="absolute top-4 right-4 text-white bg-black/50 hover:bg-black/70 rounded-full p-2 w-10 h-10 flex items-center justify-center transition-colors z-10"
+                >
+                  ✕
+                </button>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+    </SectionWrapper>
+  );
+};
+
 const RoomSanctuarySection: React.FC = () => {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
@@ -698,6 +783,7 @@ const App: React.FC = () => {
         <ArrivalSection />
         <ProblemSolutionSection />
         <FirstImpressionsSection />
+        <GallerySection />
         <RoomSanctuarySection />
         <LocationSection />
         <DiscoverThoddooSection />
