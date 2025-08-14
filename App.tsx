@@ -405,12 +405,12 @@ const FirstImpressionsSection: React.FC = () => {
 };
 
 const GallerySection: React.FC = () => {
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
   const [showAll, setShowAll] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   
   // Gallery images using optimized webp format for better performance
-  const galleryImages = [
+  const galleryImages = React.useMemo(() => [
     { src: "/images/Gallary/IMG_1174.webp", alt: "Beautiful island scenery at Thoddoo", height: "h-64" },
     { src: "/images/Gallary/IMG_1176.webp", alt: "Stunning tropical landscape", height: "h-72" },
     { src: "/images/Gallary/IMG_1182.webp", alt: "Paradise beach views", height: "h-56" },
@@ -421,7 +421,7 @@ const GallerySection: React.FC = () => {
     { src: "/images/Gallary/IMG_9147.webp", alt: "Serene island moments", height: "h-58" },
     { src: "/images/Gallary/IMG_9149.webp", alt: "Authentic Thoddoo experiences", height: "h-66" },
     { src: "/images/Gallary/IMG_9268.webp", alt: "Unforgettable island memories", height: "h-54" }
-  ];
+  ], []);
 
   // Check if mobile on mount and resize
   useEffect(() => {
@@ -431,8 +431,93 @@ const GallerySection: React.FC = () => {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (selectedImageIndex === null) return;
+      
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        navigateImage(-1);
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        navigateImage(1);
+      } else if (e.key === 'Escape') {
+        e.preventDefault();
+        setSelectedImageIndex(null);
+      }
+    };
+
+    if (selectedImageIndex !== null) {
+      document.addEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = 'unset';
+    };
+  }, [selectedImageIndex]);
+
+  const navigateImage = (direction: number) => {
+    if (selectedImageIndex === null) return;
+    const newIndex = (selectedImageIndex + direction + galleryImages.length) % galleryImages.length;
+    setSelectedImageIndex(newIndex);
+  };
+
+  // Preload adjacent images for better performance
+  useEffect(() => {
+    if (selectedImageIndex === null) return;
+
+    const preloadImage = (index: number) => {
+      if (index < 0 || index >= galleryImages.length) return;
+      const img = new Image();
+      img.src = galleryImages[index].src;
+    };
+
+    // Preload next and previous images
+    const nextIndex = (selectedImageIndex + 1) % galleryImages.length;
+    const prevIndex = (selectedImageIndex - 1 + galleryImages.length) % galleryImages.length;
+    
+    preloadImage(nextIndex);
+    preloadImage(prevIndex);
+  }, [selectedImageIndex, galleryImages]);
+
   // Show only first 4 on mobile, all on desktop or when showAll is true
   const imagesToShow = showAll || !isMobile ? galleryImages : galleryImages.slice(0, 4);
+
+  // Memoized gallery grid component for better performance
+  const GalleryGrid = React.useMemo(() => (
+    <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4 space-y-4">
+      {imagesToShow.map((image, index) => {
+        const actualGalleryIndex = showAll || !isMobile ? index : galleryImages.findIndex(img => img.src === image.src);
+        return (
+          <AnimatedElement key={image.src} className="break-inside-avoid">
+            <div 
+              className={`relative ${image.height} cursor-pointer group overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02] will-change-transform`}
+              onClick={() => setSelectedImageIndex(actualGalleryIndex)}
+            >
+              <img
+                src={image.src}
+                alt={image.alt}
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 will-change-transform"
+                loading="lazy"
+                decoding="async"
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
+              />
+              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-300" />
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 bg-gradient-to-t from-black/50 via-transparent to-transparent transition-opacity duration-300" />
+              <div className="absolute bottom-2 left-2 right-2 text-white font-medium text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-y-2 group-hover:translate-y-0">
+                {image.alt}
+              </div>
+            </div>
+          </AnimatedElement>
+        );
+      })}
+    </div>
+  ), [imagesToShow, showAll, isMobile, galleryImages]);
 
   return (
     <SectionWrapper className="bg-white">
@@ -443,29 +528,7 @@ const GallerySection: React.FC = () => {
         </AnimatedElement>
         
         {/* Masonry Grid */}
-        <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4 space-y-4">
-          {imagesToShow.map((image, index) => (
-            <AnimatedElement key={index} className="break-inside-avoid">
-              <div 
-                className={`relative ${image.height} cursor-pointer group overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02]`}
-                onClick={() => setSelectedImage(image.src)}
-              >
-                <img
-                  src={image.src}
-                  alt={image.alt}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  loading="lazy"
-                  decoding="async"
-                />
-                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-300" />
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 bg-gradient-to-t from-black/50 via-transparent to-transparent transition-opacity duration-300" />
-                <div className="absolute bottom-2 left-2 right-2 text-white font-medium text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-y-2 group-hover:translate-y-0">
-                  {image.alt}
-                </div>
-              </div>
-            </AnimatedElement>
-          ))}
-        </div>
+        {GalleryGrid}
 
         {/* See More Button - Only show on mobile when not showing all */}
         {!showAll && isMobile && (
@@ -525,13 +588,13 @@ const GallerySection: React.FC = () => {
 
         {/* Lightbox Modal */}
         <AnimatePresence>
-          {selectedImage && (
+          {selectedImageIndex !== null && (
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4"
-              onClick={() => setSelectedImage(null)}
+              className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4"
+              onClick={() => setSelectedImageIndex(null)}
             >
               <motion.div
                 initial={{ scale: 0.8, opacity: 0 }}
@@ -540,18 +603,60 @@ const GallerySection: React.FC = () => {
                 className="relative w-full h-full flex items-center justify-center"
                 onClick={(e) => e.stopPropagation()}
               >
-                <img
-                  src={selectedImage}
-                  alt="Gallery image"
-                  className="max-w-full max-h-full object-contain rounded-lg"
-                  style={{ maxWidth: '90vw', maxHeight: '90vh' }}
-                />
+                <AnimatePresence mode="wait">
+                  <motion.img
+                    key={selectedImageIndex}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -20 }}
+                    transition={{ duration: 0.3 }}
+                    src={galleryImages[selectedImageIndex].src}
+                    alt={galleryImages[selectedImageIndex].alt}
+                    className="max-w-full max-h-full object-contain rounded-lg"
+                    style={{ maxWidth: '90vw', maxHeight: '90vh' }}
+                  />
+                </AnimatePresence>
+                
+                {/* Close Button */}
                 <button
-                  onClick={() => setSelectedImage(null)}
-                  className="absolute top-4 right-4 text-white bg-black/50 hover:bg-black/70 rounded-full p-2 w-10 h-10 flex items-center justify-center transition-colors z-10"
+                  onClick={() => setSelectedImageIndex(null)}
+                  className="absolute top-4 right-4 text-white bg-black/50 hover:bg-black/70 rounded-full p-2 w-12 h-12 flex items-center justify-center transition-colors z-10 text-xl"
+                  aria-label="Close gallery"
                 >
                   ✕
                 </button>
+
+                {/* Previous Button */}
+                <button
+                  onClick={() => navigateImage(-1)}
+                  className="absolute left-4 top-1/2 -translate-y-1/2 text-white bg-black/50 hover:bg-black/70 rounded-full p-3 w-12 h-12 flex items-center justify-center transition-all duration-200 hover:scale-110 z-10"
+                  aria-label="Previous image"
+                >
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                  </svg>
+                </button>
+
+                {/* Next Button */}
+                <button
+                  onClick={() => navigateImage(1)}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-white bg-black/50 hover:bg-black/70 rounded-full p-3 w-12 h-12 flex items-center justify-center transition-all duration-200 hover:scale-110 z-10"
+                  aria-label="Next image"
+                >
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </button>
+
+                {/* Image Counter */}
+                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white bg-black/50 px-4 py-2 rounded-full text-sm font-medium">
+                  {selectedImageIndex + 1} / {galleryImages.length}
+                </div>
+
+                {/* Image Caption */}
+                <div className="absolute bottom-16 left-1/2 -translate-x-1/2 text-white bg-black/50 px-4 py-2 rounded-lg text-sm text-center max-w-md">
+                  {galleryImages[selectedImageIndex].alt}
+                </div>
               </motion.div>
             </motion.div>
           )}
